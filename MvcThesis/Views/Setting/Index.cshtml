@@ -1,0 +1,143 @@
+﻿@{ViewBag.Title = "设置";}
+<div class="row-fluid">
+    <div class="span5 box bordered-box blue-border box-nomargin">
+        @using (Html.BeginForm("SetNotice", "Setting", FormMethod.Post, new { @class = "form form-horizontal update-form", @style = "margin-bottom: 0;" }))
+        {
+            <div class='span12 box'>
+                <div class='box-header purple-background'>
+                    <div class='title'>设置公告</div>
+                    <div class="actions">
+                        <a href="#" class="btn btn-primary btn-update" data-url="@Url.Action("SetNotice")">
+                            更新
+                        </a>
+                    </div>
+                </div>
+                <div class='box-content'>
+                    <textarea class='input-block-level wysihtml5' rows='10' name="Notice">
+                        @ViewData["Notice"]
+                    </textarea>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="span5 box box-nomargin">
+        @using (Html.BeginForm("SetTime", "Setting", FormMethod.Post, new { @class = "form form-horizontal update-form", @style = "margin-bottom: 0;" }))
+        {
+            <div class="row-fluid">
+                <div class="span12 box">
+                    <div class="box-header blue-background">
+                        <div class="title">设置时间</div>
+                        <div class="actions">
+
+                            <a class="btn btn-warning btn-update" data-url="@Url.Action("SetTime")">
+                                更新
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box-content">
+                        <div class="row-fluid">
+                            <strong>选题开放时间</strong>
+                            <div>
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="TopicStartTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["TopicStartTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                ~
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="TopicEndTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["TopicEndTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="form-horizontal" />
+                        <div class="row-fluid">
+                            <strong>任务书上传时间</strong>
+                            <div>
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="MissionBookStartTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["MissionBookStartTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                ~
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="MissionBookEndTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["MissionBookEndTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="form-horizontal" />
+                        <div class="row-fluid">
+                            <strong>开题报告上传时间</strong>
+                            <div>
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="ReportStartTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["ReportStartTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                ~
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="ReportEndTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["ReportEndTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="form-horizontal" />
+                        <div class="row-fluid">
+                            <strong>毕业论文上传时间</strong>
+                            <div>
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="ThesisStartTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["ThesisStartTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                ~
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="ThesisEndTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["ThesisEndTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="form-horizontal" />
+                        <div class="row-fluid">
+                            <strong>评议书上传时间</strong>
+                            <div>
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="CommentBookStartTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["CommentBookStartTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                                ~
+                                <div class="datetimepicker input-append">
+                                    <input class="input-medium" name="CommentBookEndTime" data-format="yyyy/MM/dd hh:mm:ss" placeholder="选择时间" type="text" value="@ViewData["CommentBookEndTime"]">
+                                    <span class="add-on">
+                                        <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@*@section scripts{
+    <script type="text/javascript">
+        //$(".datetimepicker").datetimepicker();
+    </script>
+    }*@

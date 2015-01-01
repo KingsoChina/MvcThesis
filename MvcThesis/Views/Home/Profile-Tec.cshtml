@@ -1,0 +1,106 @@
+﻿@model MvcThesis.UserProfile
+@{
+    ViewBag.Title = "个人资料";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="span9 box">
+    <div class="box-content box-double-padding">
+        <fieldset>
+            <div class="span10">
+                <div class="dd-list">
+                    <dl class="dl-horizontal">
+                        <dt>教师号：</dt>
+                        <dd>@Model.UserName</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>姓名：</dt>
+                        <dd>@Model.FullName</dd>
+                    </dl>
+                    @*<dl class="dl-horizontal">
+                        <dt>所属学院：</dt>
+                        <dd>@Model.Institute</dd>
+                    </dl>*@
+                    <dl class="dl-horizontal">
+                        <dt>指导学生上限：</dt>
+                        <dd>@Model.MaxGuideNum</dd>
+                    </dl>
+                    @*<dl class="dl-horizontal">
+                        <dt>职称：</dt>
+                        <dd>@Model.JobTitle</dd>
+                    </dl>*@
+                </div>
+                <div class="form-horizontal">
+                    <form action="@Url.Action("MyProfile")" method="post" class="ajax-form">
+                        @Html.Hidden("ForTec","yes")
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.Direction, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextAreaFor(m => m.Direction)
+                                @Html.ValidationMessageFor(m => m.Direction)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Email)
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.Phone, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Phone)
+                                @Html.ValidationMessageFor(m => m.Phone)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(m => m.ShortPhone, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.ShortPhone)
+                                @Html.ValidationMessageFor(m => m.ShortPhone)
+                            </div>
+                        </div><hr class="hr-normal">
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input data-target="#change-password" data-toggle="collapse" name="changepasswordcheck" type="checkbox" value="1" class="collapsed">
+                                    修改密码?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="collapse" id="change-password" style="height: 0px;">
+                            <div class="control-group">
+                                <label class="control-label">原始密码</label>
+                                <div class="controls">
+                                    <input class="span12" name="pwd" placeholder="原始密码" type="password">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">新密码</label>
+                                <div class="controls">
+                                    <input class="span12" name="newpwd" placeholder="请输入新密码" type="password">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">确认密码</label>
+                                <div class="controls">
+                                    <input class="span12" name="renewpwd" placeholder="请再输入一次新密码" type="password">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </fieldset>
+        <hr class="hr-normal">
+        <div class="form-actions" style="margin-bottom: 0;">
+            <div class="text-right">
+                <div class="btn btn-primary btn-large">
+                    <i class="icon-save"></i>
+                    保存
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

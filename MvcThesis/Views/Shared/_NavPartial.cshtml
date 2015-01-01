@@ -1,0 +1,94 @@
+﻿<ul class='nav nav-stacked'>
+    <li class='active'>
+        <a href='@Url.Action("Index","Home")'>
+            <i class='icon-smile'></i>
+            <span>欢迎</span>
+        </a>
+    </li>
+    <li class='active'>
+        <a href='@Url.Action("MyProfile","Home")'>
+            <i class='icon-edit'></i>
+            <span>我的资料</span>
+        </a>
+    </li>
+    @if (User.IsInRole("学生"))
+    {
+        <li class='active'>
+            <a href='@Url.Action("MyThesis","Stu")'>
+                <i class='icon-magic'></i>
+                <span>我的毕业设计</span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole("教师"))
+    {
+        <li class='active'>
+            <a href='@Url.Action("TopicList","Tec")'>
+                <i class='icon-list'></i>
+                <span>我的课题列表</span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole("院长") || User.IsInRole("系统管理员"))
+    {
+        <li class='active'>
+            <a href="@Url.Action("Index","Setting")">
+                <i class="icon-calendar"></i>
+                <span>设定公告和截止日期</span>
+            </a>
+        </li>
+        <li class='active'>
+            <a href="@Url.Action("ConfirmTopicList","Topic")">
+                <i class="icon-book"></i>
+                <span>审核课题</span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole("院长") || User.IsInRole("系统管理员") || User.IsInRole("院长助理"))
+    {
+        <li class='active'>
+            <a href="@Url.Action("TopicList","Topic")">
+                <i class="icon-book"></i>
+                <span>选题情况汇总</span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole("系统管理员"))
+    {
+        @*系统管理员*@
+        <li>
+            <a class="dropdown-collapse" href="#">
+                <i class="icon-cog"></i>
+                <span>系统管理员</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+            <ul class="nav nav-stacked" style="display: none;">
+                <li>
+                    <a href="@Url.Action("Index","User")">
+                        <i class="icon-caret-right"></i>
+                        <span>账号管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Role")">
+                        <i class="icon-caret-right"></i>
+                        <span>角色管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Database", "Setting")">
+                        <i class="icon-caret-right"></i>
+                        <span>数据库管理</span>
+                    </a>
+                </li>
+                @*<li>
+                        <a href="@Url.Action("Index","Permission")">
+                            <i class="icon-caret-right"></i>
+                            <span>授权管理（开发人员）</span>
+                        </a>
+                    </li>*@
+            </ul>
+        </li>
+    }
+
+</ul>

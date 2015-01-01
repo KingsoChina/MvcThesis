@@ -1,0 +1,92 @@
+﻿@*学生查看课题列表*@
+@model IEnumerable<MvcThesis.Topic>
+           @{ViewBag.Title="课题列表";}
+@if (ViewBag.TopicStatus != 0)
+{
+    <div class="row-fluid span10">
+        <div class="alert alert-info">
+            <h4>
+                <i class="icon-info-sign"></i>
+                温馨提示
+            </h4>
+            选题时间未到或者已经截止，功能已关闭
+        </div>
+    </div>
+}else{
+<div class='row-fluid'>
+    <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+        <div class='box-header purple-background'>
+            <div class='title'>请在以下列表选择您想要作为毕业论文的课题</div>
+            <div class="pull-right">
+                @if (ViewBag.chosen != 1)
+                {
+                @Html.Raw("或者：")
+                <button class="btn btn-success btn-modal" data-url="@Url.Action("SetTopic")" data-title="自命题" name="button" style="margin-bottom:5px" type="submit">自命题</button>
+                }
+            </div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='data-table-column-filter table table-bordered table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    课题名称
+                                </th>
+                                <th>
+                                    指导老师
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var topic in Model)
+                            {
+                            <tr>
+                                <td>
+                                    <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail")" data-id="@topic.TopicId">
+                                        @topic.Title
+                                    </div>
+                                    @if(topic.IsFromStudent){<span class="label label-success">学生自命题</span>}
+                                </td>
+                                <td>
+                                    <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.Teacher.UserId">
+                                        @topic.Teacher.FullName
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class='text-right'>
+                                        @if (ViewBag.Chosen != 1)
+                                            {
+                                            <button class="btn btn-primary btn-confirm" data-content="确认要选这个课题吗？" data-id="@topic.TopicId" data-url="@Url.Action("ChooseTopic")" name="button" style="margin-bottom:5px">
+                                                选择这个课题
+                                            </button>
+                                            }
+                                        @if (ViewData["MyTopic"] == topic)
+                                            {
+                                            <span class="label red-background">
+                                                <i class="icon-star-empty"></i>您已选择此课题
+                                            </span>
+                                            }
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>课题名称</th>
+                                <th>指导老师</th>
+                                <th colspan='2'>状态</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+</div>
+}

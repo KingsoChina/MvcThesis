@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MvcThesis.Topic>
+<div class='row-fluid'>
+    <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+        <div class='box-header purple-background'>
+            <div class='title'>待审核课题列表</div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='data-table-column-filter table table-bordered table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    课题名称
+                                </th>
+                                <th>
+                                    学生
+                                </th>
+                                <th>
+                                    教师
+                                </th>
+                                <th>
+                                    情况
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var topic in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail","Tec")" data-id="@topic.TopicId">
+                                            @topic.Title
+                                            @if (topic.IsFromStudent)
+                                            {
+                                                <span class="label label-important">学生自命题</span>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (topic.Student != null)
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看学生详情" data-url="@Url.Action("StuDetail","Tec")" data-id="@topic.Student.UserId">
+                                                @topic.Student.FullName
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail","Stu")" data-id="@topic.Teacher.UserId">
+                                            @topic.Teacher.FullName
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (topic.IsDeanAgree == 0 && topic.IsTeacherAgree == 1)
+                                        {
+                                            <span class="label label-inverse">等待院长确认</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (topic.IsDeanAgree == 0)
+                                        {
+
+                                            <a class="btn btn-success btn-confirm" data-content="通过此课题？" data-url="@Url.Action("ConfirmTopic")" data-id="@topic.TopicId">
+                                                通过
+                                            </a>
+                                        }
+                                        <a class="btn btn-warning btn-modal" data-title="修改情况" data-url="@Url.Action("EditTopic")" data-id="@topic.TopicId">
+                                            更改
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+</div>

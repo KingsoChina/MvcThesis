@@ -1,0 +1,26 @@
+﻿@model MvcThesis.Comment
+@using (Html.BeginForm("DenyChosen", "Tec", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+{
+    <div style="margin:0;padding:0;display:inline">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <h4>
+            <i class="icon-exclamation-sign"></i>
+            注意
+        </h4>
+        学生自命题被驳回后可以再次申请指导，可以让学生更改完善后再次申请，也可让学生选别的指导老师
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Content, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Content, new { @placeholder = "写下驳回理由或者更改建议", @rows = "7" })
+            @Html.ValidationMessageFor(m => m.Content)
+        </div>
+    </div>
+    @Html.Hidden("TopicId",ViewData["TopicId"])
+}

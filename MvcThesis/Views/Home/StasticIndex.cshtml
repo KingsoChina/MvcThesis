@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = "首页";
+    var TopicList = ViewBag.TopicList as IList<MvcThesis.Topic>;
+    var StudentList = ViewBag.StudentList as IList<MvcThesis.UserProfile>;
+}
+<div class='alert alert-info'>
+    <a class='close' data-dismiss='alert' href='#'>&times;</a>
+    欢迎登录
+    <strong>毕业论文（设计）管理系统</strong>
+    - 希望可以简化毕业论文的流程，令教学更方便快捷。
+</div>
+<div class='row-fluid'>
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-group'></i>
+                用户
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-error'>@ViewBag.StuNum</h3>
+                    <small>学生</small>
+                    <div class='text-error icon-user align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-warning'>@ViewBag.TecNum</h3>
+                    <small>教师</small>
+                    <div class='text-warning icon-user align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-primary'>@ViewBag.DeanNum</h3>
+                    <small>院长</small>
+                    <div class='text-primary icon-user-md align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-book'></i>
+                出题
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-error'>@TopicList.Where(m=>m.IsDeanAgree==1).Count()</h3>
+                    <small>学生可选课题数</small>
+                    <div class='text-error icon-book align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-success'>@TopicList.Where(m => m.IsFromStudent == false).Count()</h3>
+                    <small>教师出题</small>
+                    <div class='text-success icon-book align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-info'>@TopicList.Where(m => m.IsFromStudent == true).Count()</h3>
+                    <small>学生自命题</small>
+                    <div class='text-info icon-book align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-group'></i>
+                选题情况
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-green'>@StudentList.Where(m => m.MyTopic != null).Count()</h3>
+                    <small>已选学生人数</small>
+                    <div class='text-green icon-ok align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-warning'>@StudentList.Where(m => m.MyTopic == null).Count()</h3>
+                    <small>未选学生人数</small>
+                    <div class='text-warning icon-exclamation align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="form-horizontal" />
+
+<div class='row-fluid'>
+
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-book'></i>
+                选题来源
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-error'>@TopicList.Where(m => m.Source == "教师科研").Count()</h3>
+                    <small>结合教师立项课题</small>
+                    <div class='text-error icon-circle align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-success'>@TopicList.Where(m => m.Source == "结合社会、生产实践").Count()</h3>
+                    <small>结合社会、生产实践</small>
+                    <div class='text-success icon-circle align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-info'>@TopicList.Where(m => m.Source == "结合教学课题").Count()</h3>
+                    <small>结合教学课题</small>
+                    <div class='text-info icon-circle align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-brown'>@TopicList.Where(m => m.Source == "其他").Count()</h3>
+                    <small>其他</small>
+                    <div class='text-brown icon-circle align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-book'></i>
+                选题性质类别
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-error'>@TopicList.Where(m => m.Type == "设计类").Count()</h3>
+                    <small>设计类</small>
+                    <div class='text-error icon-certificate align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-success'>@TopicList.Where(m => m.Type == "理论研究类").Count()</h3>
+                    <small>理论研究类</small>
+                    <div class='text-success icon-certificate align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-info'>@TopicList.Where(m => m.Type == "应用研究类").Count()</h3>
+                    <small>应用研究类</small>
+                    <div class='text-info icon-certificate align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-brown'>@TopicList.Where(m => m.Type == "软件类").Count()</h3>
+                    <small>软件类</small>
+                    <div class='text-brown icon-certificate align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-contrast'>@TopicList.Where(m => m.Type == "其它").Count()</h3>
+                    <small>其它</small>
+                    <div class='text-contrast icon-certificate align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='span3 box'>
+        <div class='box-header'>
+            <div class='title'>
+                <i class='icon-book'></i>
+                文档统计
+            </div>
+            <div class='actions'>
+                <a href="#" class="btn box-remove btn-mini btn-link">
+                    <i class='icon-remove'></i>
+                </a>
+                <a href="#" class="btn box-collapse btn-mini btn-link">
+                    <i></i>
+                </a>
+            </div>
+        </div>
+        <div class='row-fluid'>
+            <div class='span12'>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-error'>@TopicList.Where(m =>m.MissionBook!=null).Count()</h3>
+                    <small>已上传任务书人数</small>
+                    <div class='text-error icon-book align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-success'>@TopicList.Where(m => m.Report != null).Count()</h3>
+                    <small>已上传开题报告人数</small>
+                    <div class='text-success icon-book align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-info'>@TopicList.Where(m => m.Thesis != null).Count()</h3>
+                    <small>已上传毕业论文人数</small>
+                    <div class='text-info icon-book align-right'></div>
+                </div>
+                <div class='box-content box-statistic'>
+                    <h3 class='title text-info'>@TopicList.Where(m => m.MissionBook != null).Count()</h3>
+                    <small>已上传评议书人数</small>
+                    <div class='text-info icon-book align-right'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

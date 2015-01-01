@@ -1,0 +1,39 @@
+﻿<div class='navbar'>
+    <div class='navbar-inner'>
+        <div class='container-fluid'>
+            <a class='brand' href='@Url.Action("Index","Home")'>
+                <i class='icon-book'></i>
+                <span class='hidden-phone'>毕业（设计）论文管理系统</span>
+            </a>
+            <a class='toggle-nav btn pull-left' href='#'>
+                <i class='icon-reorder'></i>
+            </a>
+            <ul class='nav pull-right'>
+                <li class='dropdown dark user-menu'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                        <img alt='Mila Kunis' height='23' src='~/Content/assets/images/avatar.png' width='23' />
+                        <span class='user-name hidden-phone'>@User.Identity.Name</span>
+                        <b class='caret'></b>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li>
+                            <a href='@Url.Action("MyProfile","Home")'>
+                                <i class='icon-user'></i>
+                                个人信息
+                            </a>
+                        </li>
+                        <li class='divider'></li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class='icon-signout'></i>注销</a>
+                            @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm",@style="display:none;"}))
+                            {
+                                @Html.AntiForgeryToken()
+                                
+                            }
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

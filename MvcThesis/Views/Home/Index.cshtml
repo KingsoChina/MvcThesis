@@ -1,0 +1,66 @@
+﻿@model MvcThesis.UserProfile
+@{
+    if (Roles.IsUserInRole("教师"))
+    {
+        ViewBag.Title = "教师端";
+    }else{
+        ViewBag.Title = "学生端";
+    }
+    
+}
+<div class="row-fluid">
+    <div class="span6 offset3">
+        <div class="text-center">
+            <h2>您好，@Model.FullName @if (Roles.IsUserInRole("教师"))
+            { @Html.Raw("老师")}
+            else
+            {@Html.Raw("同学")}</h2>
+            <small class="muted">@Html.Raw(ViewBag.Notice)</small>
+        </div>
+    </div>
+</div>
+<hr  class="form-horizontal"/>
+
+<div class="row-fluid">
+    <div class="span12 box box-transparent">
+        <div class="row-fluid">
+            <div class="span6 box-quick-link blue-background">
+                <a href="@Url.Action("MyProfile","Home")">
+                    <div class="header">
+                        <div class="icon-user"></div>
+                    </div>
+                    <div class="content">我的资料</div>
+                </a>
+            </div>
+
+            @if (Model.MyTopic == null)
+            {
+                <div class="span6 box-quick-link green-background">
+                    <a href="@if(User.IsInRole("学生")){@Url.Action("TopicList","Stu")}else{@Url.Action("TopicList","Tec")}">
+                        <div class="header">
+                            <div class="icon-star"></div>
+                        </div>
+                        <div class="content">
+                            @if (User.IsInRole("学生"))
+                            { @Html.Raw("选题")}
+                            else
+                            {@Html.Raw("出题")}
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="span6 box-quick-link green-background">
+                    <a href="@Url.Action("MyThesis","Stu")">
+                        <div class="header">
+                            <div class="icon-magic"></div>
+                        </div>
+                        <div class="content">我的毕业设计（论文）</div>
+                    </a>
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>

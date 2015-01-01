@@ -1,0 +1,346 @@
+﻿@*学生毕业论文流程主页*@
+@{ViewBag.Title = "我的毕业设计（论文）";}
+@model MvcThesis.UserProfile
+<div class="row-fluid span10">
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <h4>
+            <i class="icon-info-sign"></i>
+            温馨提示
+        </h4>
+        选题通过学院审核后方可进行毕业设计（论文）相关文档上传，任务书、开题报告、毕业论文、评议书均要在学院指定时间内上传完成，可多次上传覆盖，系统以最终上传的版本为准。
+    </div>
+</div>
+
+@if (Model.MyTopic == null)
+{ //未选题
+    <div class="row-fluid span10">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">
+                ×
+            </a>
+            <h4>
+                <i class="icon-info-sign"></i>
+                提示：
+            </h4>
+            您还没有选择课题哦，赶紧去选自己喜欢的课题吧！
+            <a href="@Url.Action("TopicList")">点我选题</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row-fluid">
+
+        <div class="span12 box">
+            <div class="box-content box-padding">
+                <div class="fuelux">
+                    <div class="wizard">
+                        <ul class="steps">
+                            <li class="active" data-target="#step1">
+                                <span class="step">选题</span>
+                            </li>
+                            <li data-target="#step2" class="">
+                                <span class="step">任务书</span>
+                            </li>
+                            <li data-target="#step3" class="">
+                                <span class="step">开题报告</span>
+                            </li>
+                            <li data-target="#step4" class="">
+                                <span class="step">毕业论文</span>
+                            </li>
+                            <li data-target="#step5" class="">
+                                <span class="step">评议书</span>
+                            </li>
+                        </ul>
+                        <div class="actions">
+                            <button class="btn btn-mini btn-prev" disabled="disabled">
+                                <i class="icon-arrow-left"></i>上一步
+                            </button>
+                            <button class="btn btn-mini btn-success btn-next" data-last="完成">下一步<i class="icon-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="step-content">
+                        <hr class="hr-normal">
+                        <div class="step-pane active" id="step1">
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <div class="box-content box-statistic">
+                                        <h3 class="title text-warning">我的课题</h3>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail")" data-id="@Model.MyTopic.TopicId">
+                                            @Model.MyTopic.Title
+                                        </div>
+                                        <div class="text-warning icon-book align-right"></div>
+                                    </div>
+                                    @if (Model.MyTopic.Teacher != null)
+                                    {
+                                    <div class="box-content box-statistic">
+                                        <h3 class="title text-error">我的指导老师</h3>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@Model.MyTopic.Teacher.UserId">
+                                            @Model.MyTopic.Teacher.FullName
+                                        </div>
+                                        <div class="text-error icon-user align-right"></div>
+                                    </div>
+                                    }
+                                    <div class="box-content box-statistic">
+                                        <h3 class="title text-primary">情况</h3>
+                                        @if (Model.MyTopic.IsTeacherAgree == 1 && Model.MyTopic.IsDeanAgree == 1)
+                                        {
+                                        <small>
+                                            @Html.Raw("已通过审核")
+                                        </small>
+                                        }
+                                        else if (Model.MyTopic.IsTeacherAgree == -1)
+                                        {
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看详情" data-url="@Url.Action(" commentlist")" data-id="1">
+                                            导师拒绝指导
+                                        </div>
+                                        @Html.Raw("您需要：")
+                                        <a href="@Url.Action(" topiclist")">重新选题</a>
+                                        }
+                                        else
+                                        {
+                                        <small>
+                                            @Html.Raw("审核中")
+                                        </small>
+                                        }
+
+                                        <div class="text-primary icon-legal align-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-pane form-horizontal" id="step2">
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    @if (Model.MyTopic.MissionBook != null)
+                                {
+                                <div class="alert alert-success span4">
+                                    <h4>
+                                        <i class="icon-ok-sign"></i>
+                                        最后一次上传时间：@(Model.MyTopic.MissionBook.LastUploadTime.ToString())
+                                    </h4>
+
+                                </div>
+                                }
+                                </div>
+                            </div>
+
+                            @if (Model.MyTopic.IsDeanAgree == 1 && ViewBag.MissionBookStatus == 0)
+                        {
+                        <div class="control-group">
+                            <div class="controls">
+                                <a class="btn-success btn" href="@Url.Content("~/Down/任务书.zip")">下载相关文档</a>
+                            </div>
+                            <hr class="form-horizontal" />
+                            <div class="controls">
+                                <div class="btn fileinput-button" data-type="1"></div>
+                            </div>
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            @if (ViewBag.MissionBookStatus == -1)
+                                { <p>任务书还没开放上传</p>}
+                            @if (ViewBag.MissionBookStatus == 1)
+                                { <p>任务书上传功能没有开放</p>}
+                        </div>
+                        }
+                        </div>
+                        <div class="step-pane form-horizontal" id="step3">
+                            <div class="control-group">
+                                <div class="controls">
+                                    @if (Model.MyTopic.Report != null)
+                                {
+                                <div class="alert alert-success span4">
+                                    <h4>
+                                        <i class="icon-ok-sign"></i>
+                                        最后一次上传时间：@(Model.MyTopic.Report.LastUploadTime.ToString())
+                                    </h4>
+
+                                </div>
+                                }
+                                </div>
+                            </div>
+
+                            @if (@*Model.MyTopic.MissionBook != null &&*@ ViewBag.ReportStatus == 0)
+                        {
+
+                        <div class="control-group">
+
+                            <div class="controls">
+                                <a class="btn-success btn" href="@Url.Content("~/Down/开题报告.zip")">下载相关文档</a>
+                            </div>
+                            <hr class="form-horizontal" />
+                            <div class="controls">
+                                <div class="btn fileinput-button" data-type="2"></div>
+                            </div>
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            @if (ViewBag.ReportStatus == -1)
+                                { <p>开题报告上传功能还没开放</p>}
+                            @if (ViewBag.ReportStatus == 1)
+                                { <p>开题报告上传功能没有开放</p>}
+                        </div>
+                        }
+                        </div>
+                        <div class="step-pane form-horizontal" id="step4">
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    @if (Model.MyTopic.Thesis != null)
+                                {
+                                <div class="alert alert-success span4">
+                                    <h4>
+                                        <i class="icon-ok-sign"></i>
+                                        最后一次上传时间：@(Model.MyTopic.Thesis.LastUploadTime.ToString())
+                                    </h4>
+
+                                </div>
+                                }
+                                </div>
+                            </div>
+
+                            @if (@*Model.MyTopic.Report != null &&*@ ViewBag.ThesisStatus == 0)
+                        {
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <div class="btn fileinput-button" data-type="3"></div>
+                            </div>
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            @if (ViewBag.ThesisStatus == -1)
+                                { <p>毕业论文上传功能还没开放</p>}
+                            @if (ViewBag.ThesisStatus == 1)
+                                { <p>毕业论文上传功能没有开放</p>}
+                        </div>
+                        }
+                        </div>
+                        <div class="step-pane form-horizontal" id="step5">
+                            <div class="control-group">
+                                <div class="controls">
+                                    @if (Model.MyTopic.CommentBook != null)
+                                {
+                                <div class="alert alert-success span4">
+                                    <h4>
+                                        <i class="icon-ok-sign"></i>
+                                        最后一次上传时间：@(Model.MyTopic.CommentBook.LastUploadTime.ToString())
+                                    </h4>
+
+                                </div>
+                                }
+                                </div>
+                            </div>
+
+                            @if (@*Model.MyTopic.Thesis != null &&*@ ViewBag.CommentBookStatus == 0)
+                        {
+                        <div class="control-group">
+                            <div class="controls">
+                                <a class="btn-success btn" href="@Url.Content("~/Down/评议书.zip")">下载相关文档</a>
+                            </div>
+                            <hr class="form-horizontal" />
+                            <div class="controls">
+                                <div class="btn fileinput-button" data-type="4"></div>
+                            </div>
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            @if (ViewBag.CommentBookStatus == -1)
+                                { <p>评议书上传功能还没开放</p>}
+                            @if (ViewBag.CommentBookStatus == 1)
+                                { <p>评议书上传功能没有开放</p>}
+                        </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="UploadedDiv" style="display:none;">
+        <div class="alert alert-success span6">
+            <h4>
+                <i class="icon-ok-sign"></i>
+                您已上传
+            </h4>
+
+        </div>
+    </div>
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $(".fileinput-button").each(function (i, e) {
+                $(e).uploadifive({
+                    "formData": { "type": $(e).attr("data-type") },
+                    'buttonText': "点击上传",
+                    "buttonClass": "btn fileinput-button",
+                    'uploadScript': '@Url.Action("Upload")',
+                    "onError": function (errorType) {
+                        var msg = "上传数量有误";
+                        switch (errorType) {
+                            case "FORBIDDEN_FILE_TYPE":
+                                msg = "只允许上传word文档";
+                                break;
+                            case "404_FILE_NOT_FOUND":
+                                msg = "服务器出错";
+                                break;
+                            case "FILE_SIZE_LIMIT_EXCEEDED":
+                                msg = "文件太大";
+                                break;
+                        }
+                        $.jGrowl('上传失败：' + msg);
+                        $(e).uploadifive("clearQueue");
+                    },
+                    'onAddQueueItem': function (file) {
+                        $.jGrowl('文件 ' + file.name + ' 添加到上传队列中');
+                    },
+                    'onUploadFile': function (file) {
+                        $.jGrowl('文件 ' + file.name + ' 上传中。。。');
+                    },
+                    "onUploadComplete": function (file, data) {
+                        data = JSON.parse(data);
+                        $(e).parents(".control-group").prev().children(".controls").html("<div class=\"alert alert-success span6\"><h4><i class=\"icon-ok-sign\"></i> 最后一次上传时间：" + data.LastUploadTime + "</h4></div>");
+                        $.jGrowl('文件 ' + file.name + ' 上传中完成');
+                        $(e).uploadifive("clearQueue");
+                    },
+                    "onFallback": function () {
+                        alert("本浏览器不支持文件上传，请更换浏览器，推荐使用谷歌浏览器")
+                    },
+                    "fileType": "application/msword"
+                });
+
+            });
+        });
+    </script>
+}

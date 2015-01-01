@@ -1,0 +1,51 @@
+﻿@model MvcThesis.Topic
+
+<div class="row-fluid">
+    <div class="span12 box">
+        <div class="clearfix"></div>
+        <table class="table table-bordered table-striped" style="margin-top: 20px">
+            <tbody>
+                <tr>
+                    <td style="width:15%">标题</td>
+                    <td style="width:50%">
+                        @Model.Title
+                    </td>
+                </tr>
+                <tr>
+                    <td>适用班级</td>
+                    <td>
+                        @Model.ApplyClass
+                    </td>
+                </tr>
+                <tr>
+                    <td>课题来源</td>
+                    <td>
+                        @Model.Source
+                    </td>
+                </tr>
+                <tr>
+                    <td>类型</td>
+                    <td>
+                        @Model.Type
+                    </td>
+                </tr>
+                <tr>
+                    <td>课题条件</td>
+                    <td>
+                        <div>
+                            @Model.Condition
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>阐述</td>
+                    <td>
+                        <div>
+                            @Model.Elaboration
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

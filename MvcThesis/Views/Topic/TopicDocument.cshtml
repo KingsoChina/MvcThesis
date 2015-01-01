@@ -1,0 +1,234 @@
+﻿@model MvcThesis.Topic
+<div class="row-fluid">
+    <div class="span12">
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab1">
+                        <i class="icon-tags text-banana"></i>
+                        任务书
+                    </a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab2">
+                        <i class="icon-edit text-green"></i>
+                        开题报告
+                    </a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab3">
+                        <i class="icon-keyboard text-blue"></i>
+                        毕业论文
+                    </a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab4">
+                        <i class="icon-legal text-red"></i>
+                        评议书
+                    </a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab5">
+                        <i class="icon-legal text-red"></i>
+                        覆盖文档
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active text-center" id="tab1">
+                    @if (Model.MissionBook == null)
+                    {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            您的学生还没有上传任务书
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Content(Model.MissionBook.Path)" data-id="@Model.MissionBook.DocumentId" class="btn btn-info" title="点击下载">点击下载</a>
+
+                    }
+
+                </div>
+                <div class="tab-pane text-center" id="tab2">
+                    @if (Model.Report == null)
+                    {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            您的学生还没有上传开题报告
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Content(Model.Report.Path)" class="btn btn-success" data-id="@Model.Report.DocumentId" titl title="点击下载">点击下载</a>
+                    }
+                </div>
+                <div class="tab-pane text-center" id="tab3">
+                    @if (Model.Thesis == null)
+                    {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            您的学生还没有上传毕业论文
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Content(Model.Thesis.Path)" class="btn btn-primary" data-id="@Model.Thesis.DocumentId" titl title="点击下载">点击下载</a>
+                    }
+                </div>
+                <div class="tab-pane text-center" id="tab4">
+                    @if (Model.CommentBook == null)
+                    {
+                        <div class="alert alert-info">
+                            <h4>
+                                <i class="icon-info-sign"></i>
+                                温馨提示
+                            </h4>
+                            您的学生还没有上传评议书
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Content(Model.CommentBook.Path)" class="btn btn-warning" data-id="@Model.CommentBook.DocumentId" title="点击下载">点击下载</a>
+                    }
+                </div>
+                <script type="text/javascript">
+                    function initupload() {
+                        $("#fileinput").uploadifive('destroy');
+                        $("#fileinput").uploadifive({
+                            "auto": true,
+                            "formData": { "id": $("#DocId").val() },
+                            'buttonText': "点击覆盖",
+                            "buttonClass": "btn fileinput-button",
+                            'uploadScript': '@Url.Action("CoverDocument")',
+                            "onError": function (errorType) {
+                                var msg = "上传数量有误";
+                                switch (errorType) {
+                                    case "FORBIDDEN_FILE_TYPE":
+                                        msg = "只允许上传word文档";
+                                        break;
+                                    case "404_FILE_NOT_FOUND":
+                                        msg = "服务器出错";
+                                        break;
+                                    case "FILE_SIZE_LIMIT_EXCEEDED":
+                                        msg = "文件太大";
+                                        break;
+                                }
+                                $.jGrowl('上传失败：' + msg);
+                                $("#fileinput").uploadifive("clearQueue");
+                            },
+                            'onAddQueueItem': function (file) {
+                                $.jGrowl('文件 ' + file.name + ' 添加到上传队列中');
+                            },
+                            'onUploadFile': function (file) {
+                                $.jGrowl('文件 ' + file.name + ' 上传中。。。');
+                            },
+                            "onUploadComplete": function (file, data) {
+                                data = JSON.parse(data);
+                                $.jGrowl('文件 ' + file.name + ' 上传中完成');
+                                $("#fileinput").uploadifive("clearQueue");
+                            },
+                            "onFallback": function () {
+                                alert("本浏览器不支持文件上传，请更换浏览器，推荐使用谷歌浏览器")
+                            },
+                            "fileType": "application/msword"
+                        });
+                    }
+                </script>
+                <div class="tab-pane form-horizontal" id="tab5">
+                    <div class="control-group">
+                        <label class="control-label" for="DocId">选择覆盖文档</label>
+                        <div class="controls">
+
+                            <select id="DocId" onchange="initupload()">
+                                @if (Model.MissionBook != null)
+                                {
+                                    <option value="@Model.MissionBook.DocumentId">任务书</option>
+                                }
+                                @if (Model.Report != null)
+                                {
+                                    <option value="@Model.Report.DocumentId">开题报告</option>
+                                }
+                                @if (Model.Thesis != null)
+                                {
+                                    <option value="@Model.Thesis.DocumentId">毕业论文</option>
+                                }
+                                @if (Model.CommentBook != null)
+                                {
+                                    <option value="@Model.CommentBook.DocumentId">评议书</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <span class="btn btn-warning" id="fileinput">
+                                <i class="icon-warning-sign icon-white"></i>
+                                <span>没有文档可覆盖</span>
+                            </span>
+                        </div>
+                    </div>
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#DocId option").length && $("#fileinput").uploadifive({
+            "auto": true,
+            "formData": { "id": $("#DocId").val() },
+            'buttonText': "点击覆盖",
+            "buttonClass": "btn fileinput-button",
+            'uploadScript': '@Url.Action("CoverDocument")',
+            "onError": function (errorType) {
+                var msg = "上传数量有误";
+                switch (errorType) {
+                    case "FORBIDDEN_FILE_TYPE":
+                        msg = "只允许上传word文档";
+                        break;
+                    case "404_FILE_NOT_FOUND":
+                        msg = "服务器出错";
+                        break;
+                    case "FILE_SIZE_LIMIT_EXCEEDED":
+                        msg = "文件太大";
+                        break;
+                }
+                $.jGrowl('上传失败：' + msg);
+                $("#fileinput").uploadifive("clearQueue");
+            },
+            'onAddQueueItem': function (file) {
+                $.jGrowl('文件 ' + file.name + ' 添加到上传队列中');
+            },
+            'onUploadFile': function (file) {
+                $.jGrowl('文件 ' + file.name + ' 上传中。。。');
+            },
+            "onUploadComplete": function (file, data) {
+                data = JSON.parse(data);
+                $.jGrowl('文件 ' + file.name + ' 上传中完成');
+                $("#fileinput").uploadifive("clearQueue");
+            },
+            "onFallback": function () {
+                alert("本浏览器不支持文件上传，请更换浏览器，推荐使用谷歌浏览器")
+            },
+            "fileType": "application/msword"
+        });
+    });
+
+    $("#modalSub").click(function () {
+        $("#modal").modal("hide");
+    });
+</script>

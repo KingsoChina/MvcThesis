@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MvcThesis.Comment>
+
+@foreach(var comment in Model){
+<div class="alert alert-warning">
+    <a href="#" class="close" data-dismiss="alert">
+        ×
+    </a>
+    <h4>
+        @comment.Teacher.FullName 导师拒绝理由:
+    </h4>@comment.Content
+</div>
+    }

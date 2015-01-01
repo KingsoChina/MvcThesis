@@ -1,0 +1,53 @@
+﻿@*学生自命题表*@
+@model MvcThesis.Topic
+
+@using (Html.BeginForm("SetTopic", "Stu", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+{
+    <div style="margin:0;padding:0;display:inline">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Title, new { @placeholder = "最多不超过200字" })
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.Label("选择指导老师", new { @class = "control-label" })
+        <div class="controls">
+            <select id="TecId" name="TecId" class="select2 span5 select2-offscreen">
+                @foreach (var tec in ViewData["Tec"] as IEnumerable<MvcThesis.UserProfile>)
+                {
+                    <option value="@tec.UserId">@tec.FullName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Type, new { @class = "control-label" })
+        <div class="controls">
+            <select id="Type" name="Type">
+                <option value="设计类" selected="selected">设计类</option>
+                <option value="理论研究类">理论研究类</option>
+                <option value="应用研究类">应用研究类</option>
+                <option value="软件类">软件类</option>
+                <option value="其它">其它</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Condition, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Condition, new { @placeholder = "说明您所具备的知识、基础", @rows = "5" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Elaboration, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Elaboration, new { @placeholder = "就课题从内容要求等方面作简要阐述", @rows = "7" })
+            @Html.ValidationMessageFor(m => m.Elaboration)
+        </div>
+    </div>
+}

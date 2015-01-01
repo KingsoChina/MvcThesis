@@ -1,0 +1,66 @@
+﻿@model MvcThesis.UserProfile
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @id = "ProfileForm" }))
+{
+    <div class="control-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.FullName, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.FullName, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Email, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Phone, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Phone, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.ShortPhone, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.ShortPhone, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Institute, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Institute, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Major, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Major, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Class, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Class, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.JobTitle, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.JobTitle, new { @class = "span12" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.MaxGuideNum, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.MaxGuideNum, new { @class = "span12" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.UserId)
+}

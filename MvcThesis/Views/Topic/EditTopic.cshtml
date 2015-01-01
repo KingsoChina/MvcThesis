@@ -1,0 +1,86 @@
+﻿@*院长更改课题*@
+@model MvcThesis.Topic
+@using (Html.BeginForm("EditTopic", "Topic", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+{
+    <div style="margin:0;padding:0;display:inline">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Title, new { @placeholder = "最多不超过200字" })
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.Label("导师", new { @class = "control-label" })
+        <div class="controls">
+            <select class="select2 span5 select2-offscreen" name="TecId">
+                @foreach (var tec in ViewData["Tec"] as IEnumerable<MvcThesis.UserProfile>)
+                {
+                    <option value="@tec.UserId" @if (Model.Teacher == tec) { @Html.Raw("selected='selected'") }>@tec.FullName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.ApplyClass, new { @class = "control-label" })
+        <div class="controls">
+            <select id="ApplyClass" name="ApplyClass">
+                <option value="信息与计算科学" @if (Model.ApplyClass == "信息与计算科学") { @Html.Raw("selected = 'selected'")  }>信息与计算科学</option>
+                <option value="数学与应用数学" @if (Model.ApplyClass == "数学与应用数学") { @Html.Raw("selected = 'selected'")   }>数学与应用数学</option>
+                <option value="统计学" @if (Model.ApplyClass == "统计学") { @Html.Raw("selected = 'selected'")   }>统计学</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Source, new { @class = "control-label" })
+        <div class="controls">
+            <select id="Source" name="Source">
+                <option value="教师科研" @if (Model.Source == "教师科研")
+                                     { @Html.Raw("selected = 'selected'")}>教师科研(必须有立项的项目)</option>
+                <option value="结合社会、生产实践" @if (Model.Source == "结合社会、生产实践")
+                                          { @Html.Raw("selected = 'selected'") }>结合社会、生产实践</option>
+
+                <option value="结合教学课题" @if (Model.Source == "结合教学课题")
+                                       { @Html.Raw("selected = 'selected'") }>结合教学课题</option>
+
+                <option value="其他" @if (Model.Source == "其他")
+                                   { @Html.Raw("selected = 'selected'") }>其他</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Type, new { @class = "control-label" })
+        <div class="controls">
+            <select id="Type" name="Type">
+                <option value="设计类" @if (Model.Type == "其他") { @Html.Raw("selected = 'selected'")  }>设计类</option>
+
+                <option value="理论研究类" @if (Model.Type == "理论研究类")
+                                      { @Html.Raw("selected = 'selected'")   }>理论研究类</option>
+                <option value="应用研究类" @if (Model.Type == "应用研究类")
+                                      { @Html.Raw("selected = 'selected'")   }>应用研究类</option>
+                <option value="软件类" @if (Model.Type == "软件类")
+                                    { @Html.Raw("selected = 'selected'")   }>软件类</option>
+                <option value="其它" @if (Model.Type == "其它")
+                                   { @Html.Raw("selected = 'selected'")   }>其它</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Condition, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Condition, new { @placeholder = "要求学生必须具备的知识、基础，没有要求请填‘无’", @rows = "5" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Elaboration, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Elaboration, new { @placeholder = "就所出课题从课题条件、课题来源（如来源于教师科研的要注明项目名称及立项审批单位）、研究动态、内容要求等方面作简要阐述", @rows = "7" })
+            @Html.ValidationMessageFor(m => m.Elaboration)
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.TopicId)
+}

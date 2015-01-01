@@ -1,0 +1,65 @@
+﻿@model MvcThesis.Setting
+@{
+    ViewBag.Title = "系统设置";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form action="@Url.Action("Setting","Dean")" class="ajax-form" method="post">
+    <div class="row-fluid">
+        <div class="span6 box">
+            <div class="box-header blue-background">
+                <div class="title">设置公告</div>
+            </div>
+            <div class="box-content">
+                <textarea class="autosize input-block-level" name="Announcement" placeholder="在此处输入公告" rows="2" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 46px;">@ViewData["Announcement"]</textarea>
+            </div>
+        </div>
+        <div class="span4 box bordered-box blue-border box-nomargin">
+            <div class="box-header red-background">
+                <div class="title">
+                    学生文档上传开放日期
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="row-fluid">
+                    <div>
+                        <div class="datepicker input-append" id="datepicker">
+                            <input class="input-medium" name="DeadTime" data-format="yyyy-MM-dd" value="@ViewData["DeadTime"]" placeholder="Select datepicker" type="text">
+                            <span class="add-on">
+                                <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                            </span>
+                        </div>
+                        <div class="datetimepicker input-append" id="datetimepicker">
+                            <input class="input-medium" data-format="MM/dd/yyyy HH:mm:ss PP" placeholder="Select timepicker" type="text">
+                            <span class="add-on">
+                                <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <strong>Datetimepicker</strong>
+                    <div>
+                        <div class="datetimepicker input-append" id="datetimepicker">
+                            <input class="input-medium" data-format="MM/dd/yyyy HH:mm:ss PP" placeholder="Select timepicker" type="text">
+                            <span class="add-on">
+                                <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row-fluid">
+    <hr class="hr-normal">
+    <div class="form-actions" style="margin-bottom: 0;">
+        <div class="text-right">
+            <div class="btn btn-primary btn-large">
+                <i class="icon-save"></i>
+                保存
+            </div>
+        </div>
+    </div>
+</div>

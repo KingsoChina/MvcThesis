@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MvcThesis.Role>
+           @{ViewBag.Title = "角色管理";}
+<div class='row-fluid'>
+    <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+        <div class='box-header purple-background'>
+            <div class='title'>角色列表</div>
+            <div class="pull-right">
+                <button class="btn btn-success btn-modal" data-url="@Url.Action("Create")" data-title="添加" name="button" style="margin-bottom:5px" type="submit">添加</button>
+            </div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='data-table-column-filter table table-bordered table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    角色ID
+                                </th>
+                                <th>
+                                    角色名称
+                                </th>
+                                <th>
+                                    管理
+                                </th>  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var Role in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Role.RoleId
+                                    </td>
+                                    <td>
+                                        @Role.RoleName
+                                    </td>
+                                    <td>
+                                        <div class='text-right'>
+                                            <a class='btn btn-info btn-mini btn-modal' data-title="修改" data-url="@Url.Action("Edit")" data-id="@Role.RoleId" href='javascript:void(0)'>
+                                                修改
+                                            </a>
+                                            @*<a class='btn btn-warning btn-mini btn-modal' data-title="配置权限" data-url="@Url.Action("EditPermission")" data-id="@Role.RoleId" href='javascript:void(0)'>
+                                                配置权限
+                                            </a>*@
+                                            <a class='btn btn-danger btn-mini btn-del' data-url="@Url.Action("Delete")" data-id="@Role.RoleId" href='javascript:void(0)'>
+                                                <i class='icon-remove'></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th colspan='2'></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+</div>
+@*@section js{
+        <script type="text/javascript">
+            $(function () {
+                //删除权限
+                $(".btn-del").live("click", function () {
+                    if (confirm("确认删除？")) {
+                        $.post($(this).attr("data-url"), { id: $(this).attr("data-id") }, function (data) {
+                            if (data.status == 1) {
+                                $(this).parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    }*@

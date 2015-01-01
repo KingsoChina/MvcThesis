@@ -1,0 +1,47 @@
+﻿@model MvcThesis.UserProfile
+
+<div class="row-fluid">
+    <div class="span12 box">
+        <div class="clearfix"></div>
+        <table class="table table-bordered table-striped" style="margin-top: 20px">
+            <tbody>
+                <tr>
+                    <td style="width:15%">姓名</td>
+                    <td style="width:50%">
+                        @Model.FullName
+                    </td>
+                </tr>
+                @*<tr>
+                    <td>职称</td>
+                    <td>
+                        @Model.JobTitle
+                    </td>
+                </tr>*@
+                <tr>
+                    <td>研究方向</td>
+                    <td>
+                        @Model.Direction
+                    </td>
+                </tr>
+                <tr>
+                    <td>邮箱</td>
+                    <td>
+                        @Model.Email
+                    </td>
+                </tr>
+                <tr>
+                    <td>长号</td>
+                    <td>
+                        @Model.Phone
+                    </td>
+                </tr>
+                <tr>
+                    <td>短号</td>
+                    <td>
+                        @Model.ShortPhone
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

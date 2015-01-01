@@ -1,0 +1,107 @@
+﻿@model IEnumerable<MvcThesis.Topic>
+@{ViewBag.Title = "管理课题";}
+<div class='row-fluid'>
+    <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+        <div class='box-header purple-background'>
+            <div class='title'>课题列表</div>
+            <div class="pull-right">
+                @if (Roles.IsUserInRole("院长"))
+                {<a class="btn-danger btn" href="@Url.Action("ConfirmTopicList")">未审核列表</a> }
+                <a class="btn-success btn" href="@Url.Action("ExcelStatistic")">选题汇总</a>
+                <a class="btn-success btn" href="@Url.Action("ZipToDocument")">下载文档汇总</a>
+            </div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='data-table-column-filter table table-bordered table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    课题名称
+                                </th>
+                                <th>
+                                    学生
+                                </th>
+                                <th>
+                                    教师
+                                </th>
+                                <th>
+                                    情况
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var topic in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail","Tec")" data-id="@topic.TopicId">
+                                            @topic.Title
+                                            @if (topic.IsFromStudent)
+                                            {
+                                                <span class="label label-important">学生自命题</span>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (topic.Student != null)
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看学生详情" data-url="@Url.Action("StuDetail","Tec")" data-id="@topic.Student.UserId">
+                                                @topic.Student.FullName
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (topic.Teacher != null)
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.Teacher.UserId">
+                                                @topic.Teacher.FullName
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.Comments.First(m=>m.Teacher!=null).Teacher.UserId">
+                                                @topic.Comments.First(m => m.Teacher != null).Teacher.FullName
+                                            </div>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @if (topic.IsDeanAgree == 0 && topic.IsTeacherAgree == 1)
+                                        {
+                                            <span class="label label-inverse">等待院长确认</span>
+                                        }
+                                        else if (topic.IsDeanAgree == 1)
+                                        {
+                                            <span class="label label-success">已通过</span>
+                                        }
+                                        else if (topic.IsTeacherAgree == -1)
+                                        {
+                                            <span class="label label-inverse">导师已拒绝，自动删除</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Roles.IsUserInRole("院长"))
+                                        {
+
+                                            <a class="btn btn-warning btn-modal" data-title="修改情况" data-url="@Url.Action("EditTopic")" data-id="@topic.TopicId">
+                                                更改
+                                            </a>
+                                            <a class="btn btn-primary btn-modal" data-title="点击查看文档情况情况" data-url="@Url.Action("TopicDocument")" data-id="@topic.TopicId">
+                                                文档情况
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+</div>

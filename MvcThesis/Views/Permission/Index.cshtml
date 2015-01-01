@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MvcThesis.Permission>
+<div class='row-fluid'>
+    <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+        <div class='box-header purple-background'>
+            <div class='title'>权限列表</div>
+            <div class="pull-right">
+                <button class="btn btn-success btn-modal" data-url="@Url.Action("Create")" data-title="添加" name="button" style="margin-bottom:5px" type="submit">添加</button>
+            </div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='data-table-column-filter table table-bordered table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    权限
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var Permission in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Permission.PermissionName
+                                    </td>
+                                    <td>
+                                        <div class='text-right'>
+                                            <a class='btn btn-danger btn-mini btn-del' data-url="@Url.Action("Delete")" data-id="@Permission.PermissionId" href='###'>
+                                                <i class='icon-remove'></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+</div>
+@*@section js{
+    <script type="text/javascript">
+        $(function () {
+            //删除权限
+            $(".btn-del").live("click", function () {
+                if (confirm("确认删除？")) {
+                    $.post($(this).attr("data-url"), { id: $(this).attr("data-id") }, function (data) {
+                        if (data.status == 1) {
+                            $(this).parents("tr").remove();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}*@

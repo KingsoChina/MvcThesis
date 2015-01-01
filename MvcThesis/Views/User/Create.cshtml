@@ -1,0 +1,40 @@
+﻿@model MvcThesis.UserViewModel
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (TempData["ErrorMessage"] != null)
+    { @:
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <i class="icon-remove-sign"></i>@TempData["ErrorMessage"]
+    </div>}
+    <div class="control-group">
+        @Html.LabelFor(m => m.User_Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.User_Name)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        <div class="controls">
+            @Html.PasswordFor(m => m.Password)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Full_Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Full_Name)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputSelectMulti">选择角色</label>
+        <div class="controls">
+            @Html.DropDownList("roles", ViewData["RoleSelectList"] as List<SelectListItem>, new { @multiple = "multiple" })
+        </div>
+    </div>
+    <hr class="hr-normal">
+}

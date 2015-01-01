@@ -1,0 +1,36 @@
+﻿@model MvcThesis.Role
+
+@using (Html.BeginForm("Create", "Role", FormMethod.Post, new { @class = "form form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (TempData["ErrorMessage"] != null)
+    { @:
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <i class="icon-remove-sign"></i>
+    </div>}
+    <div class="control-group">
+        @Html.LabelFor(m => m.RoleName, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.RoleName)
+            @Html.ValidationMessageFor(m => m.RoleName)
+        </div>
+    </div>
+    @*<div class="control-group">
+        @Html.Label("选择权限", new { @class = "control-label" })
+        <div class="controls">
+            @foreach (var permission in ViewData["PermissionSelectList"] as List<SelectListItem>)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" name="permissions" value="@permission.Value">
+                    @permission.Text
+                </label>
+            }
+        </div>
+
+    </div>*@
+
+}

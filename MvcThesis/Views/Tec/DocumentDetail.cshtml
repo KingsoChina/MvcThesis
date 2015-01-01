@@ -1,0 +1,54 @@
+﻿@model MvcThesis.Topic
+
+<div class="row-fluid">
+    <div class="span12 box">
+        <div class="clearfix"></div>
+        <table class="table table-bordered table-striped" style="margin-top: 20px">
+            <tbody>
+                <tr>
+                    <td style="width:15%">论文名称</td>
+                    <td style="width:50%">
+                        @Model.Title
+                    </td>
+                </tr>
+                @if (Model.MissionBook != null)
+                {
+                    <tr>
+                        <td>任务书</td>
+                        <td>
+                            <a href="@Url.Content(@Model.MissionBook.Path)">点击下载</a>  
+                        </td>
+                    </tr>
+                }
+                @if (Model.Report != null)
+                {
+                    <tr>
+                        <td>开题报告</td>
+                        <td>
+                            <a href="@Url.Content(@Model.Report.Path)">点击下载</a>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Thesis != null)
+                {
+                    <tr>
+                        <td>毕业论文</td>
+                        <td>
+                            <a href="@Url.Content(@Model.Thesis.Path)">点击下载</a>
+                        </td>
+                    </tr>
+                }
+                @if (Model.CommentBook != null)
+                {
+                    <tr>
+                        <td>任务书</td>
+                        <td>
+                            <a href="@Url.Content(@Model.CommentBook.Path)">点击下载</a>
+                        </td>
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>

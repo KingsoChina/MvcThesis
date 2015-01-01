@@ -1,0 +1,22 @@
+﻿@model MvcThesis.Permission
+
+@using (Html.BeginForm("Create", "Permission", FormMethod.Post, new { @class = "form form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (TempData["ErrorMessage"] != null)
+    { @:
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <i class="icon-remove-sign"></i>@TempData["ErrorMessage"]
+    </div>}
+    <div class="control-group">
+        @Html.LabelFor(m => m.PermissionName, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.PermissionName)
+            @Html.ValidationMessageFor(m => m.PermissionName)
+        </div>
+    </div>
+}

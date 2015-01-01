@@ -1,0 +1,36 @@
+﻿@model MvcThesis.UserViewModel
+
+@using (Html.BeginForm("EditRole", "User", FormMethod.Post, new { @class = "form form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (TempData["ErrorMessage"] != null)
+    { @:
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">
+            ×
+        </a>
+        <i class="icon-remove-sign"></i>
+    </div>}
+    <div class="control-group">
+        @Html.LabelFor(m => m.User_Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.Label(Model.User_Name)
+        </div>
+    </div>
+    <hr class="hr-normal">
+    <div class="control-group">
+        <label class="control-label" for="inputSelectMulti">选择角色</label>
+        <div class="controls">
+            @foreach (var role in ViewData["RoleSelectList"] as List<SelectListItem>)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" name="roles" value="@role.Value" checked="@role.Selected" />
+                    @role.Text
+                </label>
+            }
+        </div>
+    </div>
+    @Html.HiddenFor(m=>m.User_ID)
+    
+}
