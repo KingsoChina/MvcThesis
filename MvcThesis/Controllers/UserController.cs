@@ -161,7 +161,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
                         user.Email = email;
                         user.Phone = tel;
                         user.ShortPhone = shorttel;
-                        user.MaxGuideNum = 6;
+                        user.MaxGuideNum = 8;
                         db.SaveChanges();
                     }
                 }
