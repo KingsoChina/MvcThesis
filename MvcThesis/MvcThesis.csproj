@@ -287,6 +287,7 @@
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\ThesisInitializer.cs" />
     <Compile Include="Models\Topic.cs" />
+    <Compile Include="Models\TopicAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +317,7 @@
     <Content Include="Content\assets\images\ajax-loaders\9.gif" />
     <Content Include="Content\assets\images\avatar.jpg" />
     <Content Include="Content\assets\images\avatar.png" />
+    <Content Include="Content\assets\images\bg.png" />
     <Content Include="Content\assets\images\bootstrap\glyphicons-halflings-white.png" />
     <Content Include="Content\assets\images\bootstrap\glyphicons-halflings.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -325,6 +327,7 @@
     <Content Include="Content\assets\images\jquery_ui\ui-icons_454545_256x240.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-icons_888888_256x240.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-icons_f6cf3b_256x240.png" />
+    <Content Include="Content\assets\images\logo.png" />
     <Content Include="Content\assets\images\plugins\bootstrap_colorpicker\alpha.png" />
     <Content Include="Content\assets\images\plugins\bootstrap_colorpicker\hue.png" />
     <Content Include="Content\assets\images\plugins\bootstrap_colorpicker\saturation.png" />

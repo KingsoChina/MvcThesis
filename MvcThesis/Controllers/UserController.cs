@@ -143,7 +143,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
                         WebSecurity.CreateUserAndAccount(tid, "111111", new
                         { //添加账号信息
                             FullName = name,
-                            MaxGuideNum = 6,
+                            MaxGuideNum = 8,
                             Direction = direction,
                             Phone = tel,
                             ShortPhone = shorttel,
@@ -168,7 +168,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
             }
             else if (role == "stu")
             {
-                for (int i = 1; i < dr.Length; i++)//从第二行开始
+                for (int i = 0; i < dr.Length; i++)
                 {
                     string sid = dr[i][0].ToString().Trim();//学号
                     if (sid == "" || sid.Length != 11) continue;
@@ -202,10 +202,12 @@ namespace MvcThesis.UI.AdminTools.Controllers
                         user.FullName = name;
                         user.Major = department;
                         user.Phone = tel;
+                        user.Class = Class;
                         user.ShortPhone = shorttel;
+                        user.QQ = QQ;
+                        user.Email = Email;
                         db.SaveChanges();
                     }
-
                 }
             }
             return Json(new { status = 1, msg = "导入成功！" });

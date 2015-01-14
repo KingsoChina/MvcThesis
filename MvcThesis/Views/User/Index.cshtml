@@ -23,8 +23,12 @@
                                     姓名
                                 </th>
                                 <th>
+                                    职称
+                                </th>
+                                <th>
                                     角色
                                 </th>
+                                
                                 <th></th>
                             </tr>
                         </thead>
@@ -34,7 +38,9 @@
                                 <tr>
                                     <td>@user.User_Name</td>
                                     <td>@user.Full_Name</td>
+                                    <td>@user.JobTitle</td>
                                     <td>@user.Role_Name</td>
+                                    
                                     <td>
                                         <div class='text-right'>
                                             <a class="btn btn-primary btn-mini btn-modal" data-url="@Url.Action("EditRole")" data-title="配置角色" data-id="@user.User_ID" href="#modal-profile" role="button">配置角色</a>
@@ -52,6 +58,7 @@
                             <tr>
                                 <th>账号</th>
                                 <th>姓名</th>
+                                <th>职称</th>
                                 <th colspan='2'>角色</th>
                             </tr>
                         </tfoot>

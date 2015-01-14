@@ -25,6 +25,7 @@ namespace MvcThesis
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<TopicAttribute> TopicAttribute { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MvcThesisMembership>()

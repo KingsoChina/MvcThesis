@@ -87,12 +87,14 @@ namespace MvcThesis.Controllers
             UserProfile user = db.UserProfiles.Single(m => m.UserId == UserId);
             user.Phone = Phone;
             user.ShortPhone = ShortPhone;
+            string Email = Request.Form["Email"];
+            user.Email = Email;
             if (Request.Form["ForTec"] == "yes")
             {
                 string Direction = Request.Form["Direction"];
-                string Email = Request.Form["Email"];
+                
                 user.Direction = Direction;
-                user.Email = Email;
+                
             }
             db.SaveChanges();
             if (changepasswordcheck == "1") {

@@ -23,7 +23,7 @@ namespace MvcThesis
                 new Setting{Title = "毕业论文开始时间",Content=DateTime.Now.ToString()},
                 new Setting{Title = "毕业论文结束时间",Content=DateTime.Now.ToString()},
                 new Setting{Title = "评议书开始时间",Content=DateTime.Now.ToString()},
-                new Setting{Title = "评议书结束时间",Content=DateTime.Now.ToString()},
+                new Setting{Title = "评议书结束时间",Content=DateTime.Now.ToString()}
             };
             Settings.ForEach(e =>context.Settings.Add(e));
             context.SaveChanges();
@@ -37,6 +37,13 @@ namespace MvcThesis
             };
             RolesList.ForEach(e => context.Roles.Add(e));
             context.SaveChanges();
+            if (!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            if (!WebSecurity.UserExists("sxadmin"))
+            {
+                WebSecurity.CreateUserAndAccount("sxadmin", "111111", new { MaxGuideNum = 0 });
+                Roles.AddUserToRole("sxadmin", "系统管理员");
+            }
         }
     }
 }

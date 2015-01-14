@@ -114,7 +114,7 @@
                 <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var ClassCount in StudentList.Where(m => m.MyTopic == null).GroupBy(m => m.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @ClassCount.Class; @Html.Raw("班"); @ClassCount.count;@Html.Raw("人");@Html.Raw(";")
+                        @ClassCount.Class;  @ClassCount.count;@Html.Raw("人");@Html.Raw(";")
                     }
                 }">
                     <h3 class='title text-warning'>@StudentList.Where(m => m.MyTopic == null).Count()</h3>
@@ -154,7 +154,7 @@
                     <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var ClassCount in List.Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @ClassCount.Class; @Html.Raw("班"); @ClassCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @ClassCount.Class;  @ClassCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                         <h3 class='text- title @color'>@List.Count()</h3>
@@ -206,7 +206,7 @@
                     <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var TypeCount in List.Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @TypeCount.Class; @Html.Raw("班"); @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @TypeCount.Class;  @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                         <h3 class='title @color'>@TopicList.Where(m => m.Type == TType).Count()</h3>
@@ -241,7 +241,7 @@
                 <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var TypeCount in TopicList.Where(m => m.MissionBook != null).Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @TypeCount.Class; @Html.Raw("班"); @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @TypeCount.Class; @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                     <h3 class='title text-error'>@TopicList.Where(m => m.MissionBook != null).Count()</h3>
@@ -251,7 +251,7 @@
                 <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var TypeCount in TopicList.Where(m => m.Report != null).Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @TypeCount.Class; @Html.Raw("班"); @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @TypeCount.Class;  @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                     <h3 class='title text-success'>@TopicList.Where(m => m.Report != null).Count()</h3>
@@ -261,7 +261,7 @@
                 <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var TypeCount in TopicList.Where(m => m.Thesis != null).Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @TypeCount.Class; @Html.Raw("班"); @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @TypeCount.Class; @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                     <h3 class='title text-info'>@TopicList.Where(m => m.Thesis != null).Count()</h3>
@@ -271,7 +271,7 @@
                 <div class='box-content box-statistic has-popover' data-placement="top" data-title="各班统计" data-content="@{
                     foreach (var TypeCount in TopicList.Where(m => m.MissionBook != null).Where(k => k.Student != null).GroupBy(m => m.Student.Class).Select(s => new { Class = s.Key, count = s.Count() }).OrderByDescending(r => r.Class))
                     {
-                        @TypeCount.Class; @Html.Raw("班"); @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
+                        @TypeCount.Class;  @TypeCount.count;@Html.Raw("项");@Html.Raw(";  ")
                     }
                 }">
                     <h3 class='title text-info'>@TopicList.Where(m => m.MissionBook != null).Count()</h3>
