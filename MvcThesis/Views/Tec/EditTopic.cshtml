@@ -1,6 +1,6 @@
-﻿@*院长更改课题*@
+﻿@*教师更改课题*@
 @model MvcThesis.Topic
-@using (Html.BeginForm("EditTopic", "Topic", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+@using (Html.BeginForm("EditTopic", "Tec", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
 {
     <div style="margin:0;padding:0;display:inline">
         @Html.AntiForgeryToken()
@@ -14,25 +14,14 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.Label("导师", new { @class = "control-label" })
-        <div class="controls">
-            <select class="select2 span5 select2-offscreen" name="TecId">
-                @foreach (var tec in ViewData["Tec"] as IEnumerable<MvcThesis.UserProfile>)
-                {
-                    <option value="@tec.UserId" @if (Model.Teacher == tec) { @Html.Raw("selected='selected'")  }>@tec.FullName</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="control-group">
         @Html.LabelFor(m => m.ApplyClass, new { @class = "control-label" })
         <div class="controls">
             <select id="ApplyClass" name="ApplyClass">
                 <option value="信息与计算科学" @if (Model.ApplyClass == "信息与计算科学") { @Html.Raw("selected = 'selected'")   }>信息与计算科学</option>
                 <option value="数学与应用数学" @if (Model.ApplyClass == "数学与应用数学") { @Html.Raw("selected = 'selected'")    }>数学与应用数学</option>
                 <option value="统计学" @if (Model.ApplyClass == "统计学") { @Html.Raw("selected = 'selected'")    }>统计学</option>
-                <option value="全部适用" @if (Model.ApplyClass == "全部适用") { @Html.Raw("selected = 'selected'") }>全部适用</option>
-
+                <option value="全部适用" @if (Model.ApplyClass == "全部适用")
+                { @Html.Raw("selected = 'selected'")    }>全部适用</option>
             </select>
         </div>
     </div>

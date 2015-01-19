@@ -1,8 +1,8 @@
 ﻿@*教师课题列表*@
 @model IEnumerable<MvcThesis.Topic>
-           @{
-               ViewBag.Title = "课题列表";
-        }
+@{
+    ViewBag.Title = "课题列表";
+}
 <div class='row-fluid'>
     <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
         <div class='box-header purple-background'>
@@ -28,7 +28,7 @@
                                     指导学生
                                 </th>
                                 <th>
-                                    情况
+                                    状态
                                 </th>
                                 <th></th>
                             </tr>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>
                                         <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail")" data-id="@topic.TopicId">
-                                            @topic.Title 
+                                            @topic.Title
                                             @if (topic.IsFromStudent)
                                             {
                                                 <span class="label label-important">学生自命题</span>
@@ -59,17 +59,21 @@
                                         }
                                     </td>
                                     <td>
-                                        @if (topic.IsDeanAgree==1)
+                                        @if (topic.IsDeanAgree == 1)
                                         {
                                             <span class="label label-success">通过</span>
                                         }
-                                        else if (topic.IsDeanAgree ==0 && topic.IsTeacherAgree==1)
+                                        else if (topic.IsDeanAgree == 0 && topic.IsTeacherAgree == 1)
                                         {
                                             <span class="label label-inverse">等待上级确认</span>
                                         }
-                                        else if (topic.Student != null && topic.IsTeacherAgree ==0)
+                                        else if (topic.Student != null && topic.IsTeacherAgree == 0)
                                         {
-                                            <span class="label label-important">等待您确认</span>
+                                            <span class="label label-important">等待您确认指导</span>
+                                        }
+                                        else if (topic.Student == null && topic.IsTeacherAgree == 0)
+                                        {
+                                            <span class="label label-important">等待您确认申报</span>
                                         }
                                         else
                                         {
@@ -77,7 +81,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @if ( topic.Student != null && topic.IsTeacherAgree ==0)
+                                        @if (topic.Student != null && topic.IsTeacherAgree == 0)
                                         {
                                             <div class='text-right'>
                                                 <a class="btn btn-success btn-confirm" data-content="确认同意指导此学生？" data-url="@Url.Action("ConfirmChosen")" data-id="@topic.TopicId">
@@ -88,7 +92,19 @@
                                                 </a>
                                             </div>
                                         }
-                                        @if (topic.IsDeanAgree == 1)
+                                        @if (topic.Student == null && topic.IsTeacherAgree == 0)
+                                        {
+                                            <a class="btn btn-success btn-confirm" data-content="确认要申报此课题么？一经申报不可以再更改和删除课题信息！" data-url="@Url.Action("ConfirmTopic")" data-id="@topic.TopicId">
+                                                申报
+                                            </a>
+                                            <a class="btn btn-warning btn-modal" data-title="修改课题" data-url="@Url.Action("EditTopic")" data-id="@topic.TopicId">
+                                                更改
+                                            </a>
+                                            <a class="btn btn-danger btn-confirm" data-content="确认要申报此课题么？" data-url="@Url.Action("Delete")" data-id="@topic.TopicId">
+                                                删除
+                                            </a>
+                                        }
+                                        @if (!(topic.CommentBook == null && topic.Report == null && topic.Thesis == null && topic.CommentBook == null))
                                         {
                                             <a class="btn btn-warning show-modal" data-url="@Url.Action("DocumentDetail","Tec")" data-id="@topic.TopicId">
                                                 查看相应文档

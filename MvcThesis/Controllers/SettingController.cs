@@ -76,24 +76,44 @@ namespace MvcThesis.Controllers
             db.SaveChanges();
             return Json(new { status = 1, msg = "更新成功" });
         }
+        [MultipleResponseFormats]
         [Authorize(Roles = "系统管理员")]
         [HttpGet]
         public ActionResult Database()
         {
             return View();
         }
-        [Authorize(Roles="系统管理员")]
+
+        [Authorize(Roles = "系统管理员")]
+        [MultipleResponseFormats]
         [HttpPost]
         public ActionResult ResetDatabase()
         {
-            //db.UserProfiles.RemoveRange(db.UserProfiles.Where(m => m.UserName != "sxadmin").ToList());
-            //db.Topics.RemoveRange(db.Topics.ToList());
-            //db.Documents.RemoveRange(db.Documents.ToList());
-            db.Database.Delete();
+            IList<Topic> TopicList = db.Topics.ToList();
+            foreach (var topic in TopicList)
+            {
+                topic.Student = null;
+                topic.Status = 1;//1表示往年论题
+                if ((DateTime.Now.Year - topic.CreateTime.Year) > 4) db.Topics.Remove(topic);//删除4年前的论题
+            }
+            db.Comments.RemoveRange(db.Comments);
+            db.Documents.RemoveRange(db.Documents);
             db.SaveChanges();
-            if (Directory.Exists(Server.MapPath("~/Upload/Document")))
-            Directory.Delete(Server.MapPath("~/Upload/Document"), true);
-            WebSecurity.Logout();
+            string[] StuArr = Roles.GetUsersInRole("学生");
+            if (StuArr.Length > 0)
+                Roles.RemoveUsersFromRole(StuArr, "学生");
+            //删除学生
+            foreach (var user in StuArr)
+            {
+                ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(user);
+                ((SimpleMembershipProvider)Membership.Provider).DeleteUser(user, true);
+            }
+            string DocPath = "~/Upload/Document";
+            if (Directory.Exists(Server.MapPath(DocPath)))
+                Directory.Delete(Server.MapPath(DocPath), true);
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Server.MapPath(DocPath));
+            if (!dir.Exists)
+                dir.Create();
             return Json(new { status = 1, msg = "数据库已经回到初始状态" });
         }
 

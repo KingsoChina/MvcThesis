@@ -21,7 +21,7 @@ namespace MvcThesis.Controllers
                 int StuNum = Roles.GetUsersInRole("学生").Count();
                 int TecNum = Roles.GetUsersInRole("教师").Count();
                 int DeanNum = Roles.GetUsersInRole("院长").Count();
-                IList<Topic> TopicList = db.Topics.ToList();//查出所有课题，在View统计
+                IList<Topic> TopicList = db.Topics.Where(m=>m.Status==0).ToList();//查出所有课题，在View统计
                 string[] StudentArr = Roles.GetUsersInRole("学生");
                 IList<UserProfile> StudentList = db.UserProfiles.Where(m => StudentArr.Contains(m.UserName)).ToList();
                 ViewBag.StuNum = StuNum;//学生数量
@@ -59,7 +59,7 @@ namespace MvcThesis.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "用户名或密码错误");
+            ViewBag.error = "用户名或密码错误";
             return View(model);
         }
 

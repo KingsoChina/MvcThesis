@@ -76,7 +76,7 @@ namespace MvcThesis
 
 
         //读取Eccel返回Dataset
-        public static DataSet ExcelToDS(string Path)
+        public static DataSet ExcelToDS(string Path,string TableName = "")
         {
             string strConn = "Provider='Microsoft.Jet.OLEDB.4.0';Data Source='" +Path+ "';" + "Extended Properties='Excel 8.0'";
             OleDbConnection conn = new OleDbConnection(strConn);
@@ -84,7 +84,8 @@ namespace MvcThesis
             string strExcel = "";
             OleDbDataAdapter myCommand = null;
             DataSet ds = null;
-            strExcel = "select * from [sheet1$]";
+            TableName = TableName == "" ?  "[sheet1$]" :"["+TableName+"$]";
+            strExcel = "select * from "+TableName;
             myCommand = new OleDbDataAdapter(strExcel, strConn);
             ds = new DataSet(); myCommand.Fill(ds, "table1");
             conn.Close();

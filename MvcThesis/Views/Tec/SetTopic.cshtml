@@ -9,7 +9,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Title, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextBoxFor(m => m.Title, new { @placeholder = "最多不超过200字" })
+            @Html.TextBoxFor(m => m.Title, new { @placeholder = "最多不超过200字",@class="span12"})
             @Html.ValidationMessageFor(m => m.Title)
         </div>
     </div>
@@ -20,6 +20,7 @@
                 <option value="信息与计算科学" selected="selected">信息与计算科学</option>
                 <option value="数学与应用数学">数学与应用数学</option>
                 <option value="统计学">统计学</option>
+                <option value="全部适用">全部适用</option>
             </select>
         </div>
     </div>
@@ -55,7 +56,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Elaboration, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextAreaFor(m => m.Elaboration, new { @placeholder = "就所出课题从课题条件、课题来源（如来源于教师科研的要注明项目名称及立项审批单位）、研究动态、内容要求等方面作简要阐述", @rows = "7" })
+            @Html.TextAreaFor(m => m.Elaboration, new { @placeholder = "就所出课题从课题条件、课题来源（如来源于教师科研的要注明项目名称及立项审批单位）、研究动态、内容要求等方面作简要阐述", @rows = "7", @class = "span12" })
             @Html.ValidationMessageFor(m => m.Elaboration)
         </div>
     </div>

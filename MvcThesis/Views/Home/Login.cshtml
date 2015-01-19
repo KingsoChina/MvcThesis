@@ -7,62 +7,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>登录</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>@Html.ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <!--[if lt IE 9]>
-    <script src='~/Content/assets/javascripts/html5shiv.js' type='text/javascript'></script>
+    <script src='/Content/assets/javascripts/html5shiv.js' type='text/javascript'></script>
     <![endif]-->
-    <link href='~/Content/assets/stylesheets/bootstrap/bootstrap.css' media='all' rel='stylesheet' type='text/css' />
-    <link href='~/Content/assets/stylesheets/bootstrap/bootstrap-responsive.css' media='all' rel='stylesheet' type='text/css' />
-    <!-- / flatty theme -->
-    <link href='~/Content/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />   
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="~/Content/login.css" type="text/css" />
 </head>
-<body class='contrast-red sign-in contrast-background'>
-    <div id='wrapper'>
-        <div class='application'>
-            <div class='application-content'>
-                    毕业论文管理系统
-            </div>
-        </div>
-        <div class='controls'>
-            <div class='caret'></div>
-            <div class='form-wrapper'>
-                <h1 class='text-center'>登录</h1>
-                @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-                <div class='row-fluid'>
-                    <div class='span12 icon-over-input'>
-                        @Html.TextBoxFor(m => m.UserName, new { @class="span12",@placeholder="账号" })
-                        <i class='icon-user muted'></i>
-                    </div>
-                </div>
-                <div class='row-fluid'>
-                    <div class='span12 icon-over-input'>
-                        @Html.PasswordFor(m => m.Password, new { @class="span12",@placeholder="密码"})
-                        <i class='icon-lock muted'></i>
-                    </div>
-                </div>
-    <label class="checkbox" for="RememberMe">
-        @Html.CheckBoxFor(m => m.RememberMe)
-        记住我
-    </label>
-                <button class="btn btn-block" name="button" type="submit">登录</button>
-                }
-                @*<div class='text-center'>
-                    <hr class='hr-normal' />
-                    <a href="forgot_password.html">忘记密码?</a>
-                </div>*@
-            </div>
-        </div>
-        <div class='login-action text-center'>
-            © 数学与统计学院
-        </div>
+<body>
+    <div class="login">
+        <div id="error">@ViewBag.error</div>
+        <ul>
+            @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+                <li><label>@Html.DisplayNameFor(m=>m.UserName)</label>@Html.TextBoxFor(m => m.UserName, new { @class = "login_input" })</li>
+                <li><label>@Html.DisplayNameFor(m => m.Password)</label>@Html.PasswordFor(m => m.Password, new { @class = "login_input" })</li>
+                <li><label>@Html.DisplayNameFor(m =>m.RememberMe)</label>@Html.CheckBoxFor(m => m.RememberMe, new { @class = "login_input" })</li>
+                <li><input type="submit" value="登陆" class="login_btn"></li>
+            }
+        </ul>
     </div>
-
+    <div class="login-action text-center">
+        © 数学与统计学院
+    </div>
 </body>
 </html>
 

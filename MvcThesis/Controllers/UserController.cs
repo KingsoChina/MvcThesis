@@ -14,7 +14,7 @@ using System.Configuration;
 
 namespace MvcThesis.UI.AdminTools.Controllers
 {
-    
+
     //[AllowAnonymous]
     [InitializeSimpleMembership]
     [Authorize(Roles = "系统管理员")]
@@ -38,6 +38,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
                     user.User_ID = bm.UserId;
                     user.User_Name = db.UserProfiles.Single(e => e.UserId == bm.UserId).UserName;
                     user.Full_Name = db.UserProfiles.Single(e => e.UserId == bm.UserId).FullName;
+                    user.JobTitle = db.UserProfiles.Single(e => e.UserId == bm.UserId).JobTitle;
                     user.Email = db.UserProfiles.Single(e => e.UserId == bm.UserId).Class;
                     var roleNameString = "";
                     for (int i = 0; i < bm.Roles.Count; i++)
@@ -132,11 +133,12 @@ namespace MvcThesis.UI.AdminTools.Controllers
                     string tid = dr[i][0].ToString().Trim();//工号
                     if (tid == "" || tid.Length != 5) continue;
                     string name = dr[i][1].ToString().Trim();//姓名
-                    string direction = dr[i][2].ToString().Trim();//研究方向
-                    string tel = dr[i][3].ToString().Trim();//电话
-                    string shorttel = dr[i][4].ToString().Trim();//短号
-                    string email = dr[i][5].ToString().Trim();//邮箱
-                    string QQ = dr[i][6].ToString().Trim();//QQ
+                    string jobtitle = dr[i][2].ToString().Trim();//职称
+                    string direction = dr[i][3].ToString().Trim();//研究方向
+                    string tel = dr[i][4].ToString().Trim();//电话
+                    string shorttel = dr[i][5].ToString().Trim();//短号
+                    string email = dr[i][6].ToString().Trim();//邮箱
+                    string QQ = dr[i][7].ToString().Trim();//QQ
 
                     if (db.UserProfiles.SingleOrDefault(e => e.UserName == tid) == null)
                     {
@@ -146,9 +148,10 @@ namespace MvcThesis.UI.AdminTools.Controllers
                             MaxGuideNum = 8,
                             Direction = direction,
                             Phone = tel,
+                            jobtitle = jobtitle,
                             ShortPhone = shorttel,
                             Email = email,
-                            QQ  =   QQ
+                            QQ = QQ
                         });
                         if (!Roles.RoleExists("教师")) Roles.CreateRole("教师");
                         Roles.AddUserToRole(tid, "教师");
@@ -160,6 +163,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
                         user.Direction = direction;
                         user.Email = email;
                         user.Phone = tel;
+                        user.JobTitle = jobtitle;
                         user.ShortPhone = shorttel;
                         user.MaxGuideNum = 8;
                         db.SaveChanges();
@@ -193,7 +197,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
                             Email = Email,
                             QQ = QQ
                         });
-                        if(!Roles.RoleExists("学生"))Roles.CreateRole("学生");
+                        if (!Roles.RoleExists("学生")) Roles.CreateRole("学生");
                         Roles.AddUserToRole(sid, "学生");
                     }
                     else

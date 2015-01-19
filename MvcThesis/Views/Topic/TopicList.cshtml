@@ -5,10 +5,14 @@
         <div class='box-header purple-background'>
             <div class='title'>课题列表</div>
             <div class="pull-right">
-                @if (Roles.IsUserInRole("院长"))
-                {<a class="btn-danger btn" href="@Url.Action("ConfirmTopicList")">未审核列表</a> }
-                <a class="btn-success btn" href="@Url.Action("ExcelStatistic")">选题汇总</a>
-                <a class="btn-success btn" href="@Url.Action("ZipToDocument")">下载文档汇总</a>
+                @if (Roles.IsUserInRole("院长") || Roles.IsUserInRole("系统管理员"))
+                {
+                    <a class="btn-danger btn" href="@Url.Action("ConfirmTopicList")">未审核列表</a>
+                    <a class="btn btn-primary btn-modal" data-url="@Url.Action("ImportData")" data-title="导入汇总表">导入汇总表</a>
+                }
+                <a class="btn-success btn" href="@Url.Action("ExcelStatistic")">选题汇总表</a>
+                <a class="btn-success btn" href="@Url.Action("ExcelTopicDetail")">课题详细汇总表</a>
+                <a class="btn-success btn" href="@Url.Action("ZipToDocument")">下载文档</a>
             </div>
         </div>
         <div class='box-content box-no-padding'>
@@ -83,7 +87,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @if (Roles.IsUserInRole("院长"))
+                                        @if (Roles.IsUserInRole("院长") || Roles.IsUserInRole("系统管理员"))
                                         {
 
                                             <a class="btn btn-warning btn-modal" data-title="修改情况" data-url="@Url.Action("EditTopic")" data-id="@topic.TopicId">
@@ -91,6 +95,9 @@
                                             </a>
                                             <a class="btn btn-primary btn-modal" data-title="点击查看文档情况情况" data-url="@Url.Action("TopicDocument")" data-id="@topic.TopicId">
                                                 文档情况
+                                            </a>
+                                            <a class="btn btn-danger btn-mini btn-del" data-url="@Url.Action("Delete")" data-id="@topic.TopicId" href="javascript:void(0);">
+                                                <i class="icon-remove"></i>
                                             </a>
                                         }
                                     </td>

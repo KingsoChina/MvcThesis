@@ -241,9 +241,8 @@
                     content = $(this).attr("data-content");
                 return bootbox.confirm(content, function (result) {
                     if (result === true) {
-                        $.post(url, { id: id }, function (data) {
+                        $.post(url, { id: id,ajax:1 }, function (data) {
                             if (data.status == 1) {
-                                //reload();
                                 setTimeout(function () {
                                     reload();
                                 }, 2000);

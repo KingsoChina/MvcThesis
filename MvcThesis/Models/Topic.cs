@@ -21,7 +21,10 @@ namespace MvcThesis
         [StringLength(100)]
         public string Title { get; set; }
 
-        [Display(Name = "适用班级")]
+        [Display(Name = "状态"), Required]
+        public int Status { get; set; }
+
+        [Display(Name = "适用专业")]
         [StringLength(50)]
         public string ApplyClass { get; set; }
 

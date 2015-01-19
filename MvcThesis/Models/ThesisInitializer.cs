@@ -8,7 +8,7 @@ using System.Web.Security;
 
 namespace MvcThesis
 {
-    public class ThesisInitializer : DropCreateDatabaseIfModelChanges<MvcThesisMembershipContext>
+    public class ThesisInitializer : CreateDatabaseIfNotExists<MvcThesisMembershipContext>
     {
         protected override void Seed(MvcThesisMembershipContext context)
         {

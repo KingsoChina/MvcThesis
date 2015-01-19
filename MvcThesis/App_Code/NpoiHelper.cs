@@ -16,7 +16,7 @@ namespace MvcThesis
         /// </summary>
         /// <param name="sourceTable">要导出数据的DataTable</param>
         /// <returns>Excel工作表</returns>
-        private static Stream ExportDataTableToExcel(DataTable sourceTable, string sheetName)
+        private static Stream ExportDataTableToExcel(DataTable sourceTable, string sheetName,params int[] ColumnWidth)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
             MemoryStream ms = new MemoryStream();
@@ -33,13 +33,18 @@ namespace MvcThesis
             Headfont.FontName = "宋体";
             HeadStyle.SetFont(Headfont);
 
+            if(ColumnWidth.Length==0) ColumnWidth = new int[]{20,9,25,50,9,12};
             //设置列宽
-            sheet.SetColumnWidth(0, 20 * 256);
-            sheet.SetColumnWidth(1, 9  * 256);
-            sheet.SetColumnWidth(2, 25 * 256);
-            sheet.SetColumnWidth(3, 50 * 256);
-            sheet.SetColumnWidth(4, 9 * 256);
-            sheet.SetColumnWidth(5, 12 * 256);
+            for (int i = 0; i < ColumnWidth.Length; i++)
+            {
+                sheet.SetColumnWidth(i, (ColumnWidth[i] + 2) * 256);
+            }
+            //sheet.SetColumnWidth(0, 20 * 256);
+            //sheet.SetColumnWidth(1, 9  * 256);
+            //sheet.SetColumnWidth(2, 25 * 256);
+            //sheet.SetColumnWidth(3, 50 * 256);
+            //sheet.SetColumnWidth(4, 9 * 256);
+            //sheet.SetColumnWidth(5, 12 * 256);
             //sheet.SetColumnWidth(6, 9 * 256);
             //sheet.SetColumnWidth(7, 20 * 256);
             //sheet.SetColumnWidth(8, 10 * 256);
@@ -93,9 +98,9 @@ namespace MvcThesis
         /// <param name="sourceTable">要导出数据的DataTable</param>
         /// <param name="fileName">指定Excel工作表名称</param>
         /// <returns>Excel工作表</returns>
-        public static void ExportDataTableToExcel(DataTable sourceTable, string fileName, string sheetName)
+        public static void ExportDataTableToExcel(DataTable sourceTable, string fileName, string sheetName, params int[] ColumnWidth)
         {
-            MemoryStream ms = ExportDataTableToExcel(sourceTable, sheetName) as MemoryStream;
+            MemoryStream ms = ExportDataTableToExcel(sourceTable, sheetName,ColumnWidth) as MemoryStream;
             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + fileName);
             HttpContext.Current.Response.BinaryWrite(ms.ToArray());
             HttpContext.Current.Response.End();
