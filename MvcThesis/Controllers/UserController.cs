@@ -81,7 +81,6 @@ namespace MvcThesis.UI.AdminTools.Controllers
             {
                 string userName = collection.Get("User_Name");
                 string password = collection.Get("Password");
-                //string email = collection.Get("Email");
                 string Name = collection.Get("Full_Name");
                 if (db.UserProfiles.SingleOrDefault(e => e.UserName == userName) == null)
                 {
@@ -94,10 +93,6 @@ namespace MvcThesis.UI.AdminTools.Controllers
                             Roles.AddUserToRole(userName, roleName);
                         }
                     }
-
-                    //UserProfile user = db.UserProfiles.Single(e => e.UserName == userName);
-                    //user.Class = email;
-                    //db.SaveChanges();
                     if (Request.IsAjaxRequest()) return Json(new { status = 1, msg = "添加成功" });
                     return RedirectToAction("Index");
                 }

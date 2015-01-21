@@ -56,10 +56,6 @@ namespace MvcThesis
         [Display(Name = "职称")]
         [StringLength(250)]
         public string JobTitle { get; set; }
-
-        //[Display(Name = "学位")]
-        //[StringLength(250)]
-        //public string Degree { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "指导人数")]
         public int MaxGuideNum { get; set; }

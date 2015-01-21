@@ -30,11 +30,7 @@ namespace MvcThesis
                 };
             }
         }
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if (filterContext.HttpContext.Request.Browser.to)
-        //    base.OnActionExecuting(filterContext);
-        //}
+
     }
     //public class MyGlobalAttribute : ActionFilterAttribute
     //{
