@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<MvcThesis.Topic>
+           @{ViewBag.Title = "审核课题";}
 <div class='row-fluid'>
     <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
         <div class='box-header purple-background'>
             <div class='title'>待审核课题列表</div>
+            <div class="pull-left">
+                <a class="btn-info btn"><input type="checkbox" id="checkAll"/><label for="checkAll" style="display:inline;">全选</label></a>
+                <button class="btn-success btn btn-confirm" id="SubCheckBtn" data-content="通过选中的课题吗？" data-url="@Url.Action("ConfirmChosenTopic")" data-id="">通过选中</button>
+            </div>
         </div>
         <div class='box-content box-no-padding'>
             <div class='responsive-table'>
@@ -30,6 +35,7 @@
                             {
                                 <tr>
                                     <td>
+                                        <input type="checkbox" name="check_ids" value="@topic.TopicId" />
                                         <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail","Tec")" data-id="@topic.TopicId">
                                             @topic.Title
                                             @if (topic.IsFromStudent)
@@ -80,3 +86,32 @@
 </div>
 <div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
 </div>
+@section scripts{
+    <script type="text/javascript">
+        var CheckedIds = [];
+        $("#checkAll").live("click",function () {
+            if ($(this).attr("checked") == "checked") {
+                $("tbody input:checkbox").each(function (i,e) {
+                    $(this).attr("checked", true);
+                    CheckedIds.push($(this).val());
+                });
+            } else {
+                $("tbody input:checkbox").each(function (i, e) {
+                    $(this).attr("checked", false);
+                    $.inArray($(this).val(), CheckedIds) + 1 && CheckedIds.splice($.inArray($(this).val(), CheckedIds), 1);
+                });
+            }
+            $("#SubCheckBtn").attr("data-id", CheckedIds.join(","));
+        });
+        $("tbody input:checkbox").live("click", function () {
+            if ($(this).attr("checked") == "checked") {
+                CheckedIds.push($(this).val());
+            } else {
+                $.inArray($(this).val(), CheckedIds)+1 && CheckedIds.splice($.inArray($(this).val(), CheckedIds), 1);
+            }
+        });
+        $("input:checkbox").live("click", function () {
+            $("#SubCheckBtn").attr("data-id",CheckedIds.join(","));
+        });
+    </script>
+    }

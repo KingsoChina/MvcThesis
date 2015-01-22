@@ -59,6 +59,7 @@ namespace MvcThesis.Controllers
             db.SaveChanges();
             return Json(new { status = 1, msg = "自命题成功，等待老师同意" });
         }
+        [Authorize(Roles="系统管理员,院长,院长助理,学生")]
         //查看教师资料
         [MultipleResponseFormats]
         public ActionResult TecDetail(int id)

@@ -90,7 +90,7 @@ namespace MvcThesis.Controllers
         public ActionResult TopicList()
         {
           UserProfile techer = db.UserProfiles.SingleOrDefault(m => m.UserId == WebSecurity.CurrentUserId);
-          IEnumerable TopicList = db.Topics.Where(m => m.Teacher.UserId == techer.UserId&&m.Status==0).ToList();
+          IEnumerable TopicList = db.Topics.Where(m => m.Teacher.UserId == techer.UserId&&m.Status==0).OrderByDescending(m=>m.CreateTime).ToList();
            int count = techer.Topics.Count();
           if ( count >= techer.MaxGuideNum)
             ViewBag.MaxNum = 1;

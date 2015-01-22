@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>浏览器版本过低</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport' />
+    <!--[if lt IE 9]>
+    <script src='~/Content/~/Content/assets/javascripts/html5shiv.js' type='text/javascript'></script>
+    <![endif]-->
+    <link href='~/Content/~/Content/assets/stylesheets/bootstrap/bootstrap.css' media='all' rel='stylesheet' type='text/css' />
+    <link href='~/Content/assets/stylesheets/bootstrap/bootstrap-responsive.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / jquery ui -->
+    <link href='~/Content/assets/stylesheets/jquery_ui/jquery-ui-1.10.0.custom.css' media='all' rel='stylesheet' type='text/css' />
+    <link href='~/Content/assets/stylesheets/jquery_ui/jquery.ui.1.10.0.ie.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / switch buttons -->
+    <link href='~/Content/assets/stylesheets/plugins/bootstrap_switch/bootstrap-switch.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / flatty theme -->
+    <link href='~/Content/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />
+    <style>
+        .header img {
+            border: none;
+            width: 55px;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body class='contrast-red application-error 404-error contrast-background'>
+    <div id="wrapper">
+        <div class="error-type">
+            <span>升级</span>
+        </div>
+        <div class="error-message">
+            您的浏览器版本过低，请更新您的浏览器版本或使用以下推荐的浏览器。<br>
+        </div>
+        <div class="box-content">
+            <div class="row-fluid">
+                <div class="span4 box-quick-link blue-background">
+                    <a href="http://www.google.cn/chrome/eula.html?hl=zh-CN&brand=CHMI&platform=win" target="_blank">
+                        <div class="header">
+                            <img src="~/Content/assets/images/chrome.png" alt="谷歌浏览器" />
+                        </div>
+                        <div class="content">谷歌浏览器</div>
+                    </a>
+                </div>
+                <div class="span4 box-quick-link green-background">
+                    <a href="http://download.firefox.com.cn/releases/webins3.0/official/zh-CN/Firefox-latest.exe" target="_blank">
+                        <div class="header">
+                            <img src="~/Content/assets/images/firefox.png" alt="火狐浏览器" />
+                        </div>
+                        <div class="content">火狐浏览器</div>
+                    </a>
+                </div>
+                <div class="span4 box-quick-link orange-background">
+                    <a href="http://www.apple.com.cn/safari/download/" target="_blank">
+                        <div class="header">
+                            <img src="~/Content/assets/images/safari.png" alt="苹果浏览器" />
+                        </div>
+                        <div class="content">苹果浏览器</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br />
+        如果您使用360浏览器，请调到极速模式
+        <div class="youcan">
+            <small class="text-center">
+                为什么要升级浏览器?<br />
+                您正在使用的是非常落后的浏览器,<br />
+                为了您的隐私和数据安全,<br />
+                为了让您得到更好的网上浏览体验,<br />
+                我们强烈建议您将浏览器升级至IE9 <br />
+            </small>
+        </div>
+        <br />
+        <a href="@Url.Action("Index","Home")" class="btn btn-block">
+            <i class="icon-chevron-left"></i>
+            返回首页
+        </a>
+    </div>
+    <!-- / jquery -->
+    <script src='~/Content/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
+    <!-- / jquery mobile events (for touch and slide) -->
+    <script src='~/Content/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
+    <!-- / jquery migrate (for compatibility with new jquery) -->
+    <script src='~/Content/assets/javascripts/jquery/jquery-migrate.min.js' type='text/javascript'></script>
+    <!-- / jquery ui -->
+    <script src='~/Content/assets/javascripts/jquery_ui/jquery-ui.min.js' type='text/javascript'></script>
+    <!-- / bootstrap -->
+    <script src='~/Content/assets/javascripts/bootstrap/bootstrap.min.js' type='text/javascript'></script>
+    <script src='~/Content/assets/javascripts/plugins/flot/excanvas.js' type='text/javascript'></script>
+    <!-- / flatty theme -->
+    <script src='~/Content/assets/javascripts/nav.js' type='text/javascript'></script>
+    <script src='~/Content/assets/javascripts/tables.js' type='text/javascript'></script>
+    <script src='~/Content/assets/javascripts/theme.js' type='text/javascript'></script>
+</body>
+</html>

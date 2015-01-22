@@ -51,6 +51,19 @@ namespace MvcThesis.Controllers
             UserProfile Student = db.UserProfiles.SingleOrDefault(m => m.UserId == id);
             return View(Student);
         }
+        [HttpPost]
+        public ActionResult ConfirmChosenTopic(string id)
+        {
+            string[] ids = id.Split(',');
+            if (ids.Length <= 1 && id=="") return Json(new { status = 0, msg = "没有选中课题" });
+            IList<Topic> topicList = db.Topics.Where(m => ids.Contains(m.TopicId.ToString())).ToList();
+            foreach (var topic in topicList)
+            {
+                topic.IsDeanAgree = 1;
+            }
+            db.SaveChanges();
+            return Json(new { status = 1, msg = "操作成功" });
+        }
         [MultipleResponseFormats]
         public ActionResult TopicList()
         {

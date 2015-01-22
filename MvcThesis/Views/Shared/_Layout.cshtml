@@ -71,14 +71,14 @@
                             </div>
                         </div>
                         <!--BodyStart-->@RenderBody()<!--BodyEnd-->
-                        
-                        <div class="modal hide fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+
+                        <div class="modal hide fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true">
                             <div class="modal-header">
                                 <button class="close" data-dismiss="modal" type="button">×</button>
                                 <h3>编辑资料</h3>
                             </div>
                             <div class="modal-body">
-
+                                
                             </div>
                             <div class="modal-footer">
                                 <button class="btn" data-dismiss="modal">关闭</button>
@@ -168,18 +168,34 @@
     <script src="~/Scripts/jquery.uploadifive.min.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        var lessThenIE9 = function () {
+            var UA = navigator.userAgent,
+                isIE = UA.indexOf('MSIE') > -1,
+                v = isIE ? /\d+/.exec(UA.split(';')[1]) : 'no ie';
+            return v < 9;
+        }();
         (function ($) {
             $(".btn-modal").live("click", function () {
                 $modal = $("#modal");
                 var title = $(this).attr("data-title"),
                     url = $(this).attr("data-url"),
                     callback = $(this).attr("data-callback"),
-                    id = $(this).attr("data-id");
+                    id = $(this).attr("data-id"),
+                    load_html = "<div style=\"width:100%;text-align:center;\"><img alt=\"加载中\" src=\"@Url.Content("~/Content/assets/images/ajax-loaders/11.gif")\" style=\"margin:auto;\"></div>";
+                $modal.children(".modal-body").html(load_html);
                 $.get(url, { id: id }, function (data) {
                     $modal.children(".modal-header").children("h3").html(title);//标题
                     $modal.children(".modal-body").html(data);//表单内容
                     $.validator.unobtrusive.parse(".modal-body form");//重新绑定验证
                     setSelect2();
+                    var re = /(\u4fee\u6539)/g;
+                    if (re.test(title)) {
+                        $(".modal-footer .btn").first().html("\u653e\u5f03");
+                        $(".modal-footer .btn").last().html("\u4fdd\u5b58");
+                    } else {
+                        $(".modal-footer .btn").first().html("\u53d6\u6d88");
+                        $(".modal-footer .btn").last().html("\u63d0\u4ea4");
+                    }
                 });
                 $modal.modal();
             });
@@ -239,9 +255,10 @@
                 var url = $(this).attr("data-url"),
                     id = $(this).attr("data-id"),
                     content = $(this).attr("data-content");
+                bootbox.setLocale("zn");
                 return bootbox.confirm(content, function (result) {
                     if (result === true) {
-                        $.post(url, { id: id,ajax:1 }, function (data) {
+                        $.post(url, { id: id, ajax: 1 }, function (data) {
                             if (data.status == 1) {
                                 setTimeout(function () {
                                     reload();
@@ -271,7 +288,8 @@
         })($);
         //异步刷新主窗口
         function reload() {
-            $.get(document.location.href, {ajax:1}, function (html) {
+            if (lessThenIE9) window.location.reload();
+            $.get(document.location.href, { ajax: 1 }, function (html) {
                 //html = html.replace(/<!--BodyEnd-->([\w\W]*)/, "");
                 //html = html.replace(/([\w\W]*)<!--BodyStart-->/, "");
                 //console.log(html);
@@ -283,7 +301,7 @@
                 setDataTable($(".data-table-column-filter")).columnFilter();
             });
         }
-        
+
     </script>
     @RenderSection("scripts", required: false)
 </body>

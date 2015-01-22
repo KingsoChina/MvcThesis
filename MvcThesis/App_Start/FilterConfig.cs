@@ -8,13 +8,20 @@ namespace MvcThesis
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-
+            filters.Add(new MultipleResponseFormatsAttribute());
         }
 
     }
 
     public class MultipleResponseFormatsAttribute : ActionFilterAttribute 
     {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.RouteData.Values["controller"].ToString()=="Error") return;
+            if (filterContext.HttpContext.Request.Browser.Browser == "IE" && filterContext.HttpContext.Request.Browser.MajorVersion < 8)
+                filterContext.HttpContext.Response.Redirect("~/Error/Browser", true);
+            //base.OnActionExecuting(filterContext);
+        }
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var request = filterContext.HttpContext.Request;
@@ -30,7 +37,6 @@ namespace MvcThesis
                 };
             }
         }
-
     }
     //public class MyGlobalAttribute : ActionFilterAttribute
     //{

@@ -321,6 +321,8 @@
     <Content Include="Content\assets\images\bg.png" />
     <Content Include="Content\assets\images\bootstrap\glyphicons-halflings-white.png" />
     <Content Include="Content\assets\images\bootstrap\glyphicons-halflings.png" />
+    <Content Include="Content\assets\images\chrome.png" />
+    <Content Include="Content\assets\images\firefox.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-bg_glass_75_ffffff_1x400.png" />
     <Content Include="Content\assets\images\jquery_ui\ui-icons_222222_256x240.png" />
@@ -341,6 +343,7 @@
     <Content Include="Content\assets\images\plugins\select2\spinner.gif" />
     <Content Include="Content\assets\images\plugins\xeditable\clear.png" />
     <Content Include="Content\assets\images\plugins\xeditable\loading.gif" />
+    <Content Include="Content\assets\images\safari.png" />
     <Content Include="Content\assets\javascripts\bootstrap\bootstrap.min.js" />
     <Content Include="Content\assets\javascripts\demo\charts.js" />
     <Content Include="Content\assets\javascripts\demo\demo.js" />
@@ -611,6 +614,7 @@
     <Content Include="Upload\论文选题汇总表.xls" />
     <Content Include="Upload\课题详细汇总.xls" />
     <Content Include="Views\Tec\EditTopic.cshtml" />
+    <Content Include="Views\Error\Browser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Upload\Import\" />

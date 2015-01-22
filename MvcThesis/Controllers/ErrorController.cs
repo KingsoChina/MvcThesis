@@ -21,5 +21,10 @@ namespace MvcThesis.Controllers
             return View("NotFound");
         }
 
+        public ViewResult Browser()
+        {
+            return View();
+        }
+
     }
 }
