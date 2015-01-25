@@ -30,7 +30,7 @@ namespace MvcThesis.Controllers
             {
                 return RedirectToAction("MyThesis");
             }
-            IEnumerable TopicList = db.Topics.Where(m => m.Student == null && m.IsDeanAgree==1 && m.Status==0 &&(m.ApplyClass == Stu.Major||m.ApplyClass=="全部适用")).ToList();
+            IEnumerable TopicList = db.Topics.Where(m => m.Student == null && m.IsDeanAgree == 1 && m.Status == 0).ToList().Where(( m=>m.ApplyClass.Split(',').Contains(Stu.Major)));
             return View(TopicList);
         }
         [MultipleResponseFormats]

@@ -38,6 +38,42 @@ namespace MvcThesis.Controllers
             return Json(new { status = 1, msg = "已通过课题" + Topic.Title });
         }
 
+        [HttpGet]
+        public ActionResult AssignMarker(string id)
+        {
+            string[] ids = id.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            if (ids.Length < 1) return Json(new { status = 0, msg = "没有选中课题" }, JsonRequestBehavior.AllowGet);
+            string[] UserName = Roles.GetUsersInRole("教师");
+            IEnumerable Tec = db.UserProfiles.Where(m => UserName.Contains(m.UserName)).ToList();//列出没有超出指导数量的教师
+            ViewData["Tec"] = Tec;
+            if (ids.Length == 1)
+            {
+                int topicid = Convert.ToInt32(ids[0]);
+                Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == topicid);
+                ViewData["topic"] = topic;
+            }
+            ViewData["id"] = string.Join(",", ids);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AssignMarker(string id, string CommentTeacherId, string AnswerTeacherId)
+        {
+            string[] ids = id.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            if (ids.Length < 1) return Json(new { status = 0, msg = "没有选中课题" });
+            int CTID = Convert.ToInt32(CommentTeacherId);
+            int ATID = Convert.ToInt32(AnswerTeacherId);
+            UserProfile CommentTeacher = db.UserProfiles.SingleOrDefault(m => m.UserId == CTID);
+            UserProfile AnswerTeacher = db.UserProfiles.SingleOrDefault(m => m.UserId == ATID);
+            foreach (var topicId in ids)
+            {
+                int TID = Convert.ToInt32(topicId);
+                Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == TID);
+                topic.CommentTeacher = CommentTeacher;
+                topic.AnswerTeacher = AnswerTeacher;
+                db.SaveChanges();
+            }
+            return Json(new { status = 1, msg = "设置成功！" });
+        }
         //查看教师资料
         [MultipleResponseFormats]
         public ActionResult TecDetail(int id)
@@ -54,8 +90,8 @@ namespace MvcThesis.Controllers
         [HttpPost]
         public ActionResult ConfirmChosenTopic(string id)
         {
-            string[] ids = id.Split(',');
-            if (ids.Length <= 1 && id=="") return Json(new { status = 0, msg = "没有选中课题" });
+            string[] ids = id.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            if (ids.Length < 1) return Json(new { status = 0, msg = "没有选中课题" });
             IList<Topic> topicList = db.Topics.Where(m => ids.Contains(m.TopicId.ToString())).ToList();
             foreach (var topic in topicList)
             {
@@ -67,7 +103,7 @@ namespace MvcThesis.Controllers
         [MultipleResponseFormats]
         public ActionResult TopicList()
         {
-            IEnumerable TopicList = db.Topics.Where(m=>m.Status==0).ToList();
+            IEnumerable TopicList = db.Topics.Where(m => m.Status == 0).ToList();
             return View(TopicList);
         }
         [Authorize(Roles = "院长,系统管理员")]
@@ -78,15 +114,17 @@ namespace MvcThesis.Controllers
             string[] UserName = Roles.GetUsersInRole("教师");
             IEnumerable Tec = db.UserProfiles.Where(m => UserName.Contains(m.UserName)).ToList();//列出没有超出指导数量的教师
             ViewData["Tec"] = Tec;
+            ViewData["MajorList"] = ThesisHelper.getMajor();
+            ViewData["SelectedMajor"] = Topic.ApplyClass.Split(',');
             return View(Topic);
         }
         [HttpPost]
         [Authorize(Roles = "院长,系统管理员")]
-        public ActionResult EditTopic(Topic topic, int TecId)
+        public ActionResult EditTopic(Topic topic, int TecId,string[] ApplyClass)
         {
             if (!ModelState.IsValid) return Json(new { status = 0, msg = "提交数据有误" });
             Topic Topic = db.Topics.Single(m => m.TopicId == topic.TopicId);
-            Topic.ApplyClass = topic.ApplyClass;
+            Topic.ApplyClass = string.Join(",", ApplyClass);
             Topic.Teacher = db.UserProfiles.Single(m => m.UserId == TecId);
             Topic.Title = topic.Title;
             Topic.Source = topic.Source;
@@ -178,7 +216,7 @@ namespace MvcThesis.Controllers
                     topic.CreateTime.ToString("yyyy/MM/dd H:mm:ss")
                 });
             }
-            int[] ColumnWidth = new int[] { 20, 15, 10, 10, 30, 30, 8, 5 ,25};//设定列宽
+            int[] ColumnWidth = new int[] { 20, 15, 10, 10, 30, 30, 8, 5, 25 };//设定列宽
             NpoiHelper.ExportDataTableToExcel(dt, DateTime.Now.Year + "课题详细汇总.xls", "毕业论文课题详细汇总", ColumnWidth);
             return Json(new { status = 1, msg = "导出成功" });
         }
@@ -219,8 +257,8 @@ namespace MvcThesis.Controllers
                 for (int i = 0; i < rowcount; i++)
                 {
                     string Title = dr[i][0].ToString().Trim();
-                    Topic topic = db.Topics.SingleOrDefault(m => m.Title==Title);
-                    if (topic==null) { topic = db.Topics.Create(); } 
+                    Topic topic = db.Topics.SingleOrDefault(m => m.Title == Title);
+                    if (topic == null) { topic = db.Topics.Create(); }
                     string TeacherName = dr[i][6].ToString().Trim();
                     UserProfile Teacher = db.UserProfiles.SingleOrDefault(m => m.FullName == TeacherName);
                     topic.Title = dr[i][0].ToString().Trim();
@@ -233,10 +271,10 @@ namespace MvcThesis.Controllers
                     topic.IsFromStudent = dr[i][7].ToString().Trim() == "是" ? true : false;
                     topic.CreateTime = Convert.ToDateTime(dr[i][8]);
                     topic.IsDeanAgree = 1;
-                    if (!(topic.TopicId > 0) ) db.Topics.Add(topic);
+                    if (!(topic.TopicId > 0)) db.Topics.Add(topic);
                     db.SaveChanges();
                 }
-                
+
             }
             else if (sheet == "2")
             {

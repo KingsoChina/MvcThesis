@@ -70,12 +70,26 @@ namespace MvcThesis
 
         [Display(Name = "开题报告")]
         public virtual Document Report { get; set; }
+
         [Display(Name = "毕业论文")]
         public virtual Document Thesis { get; set; }
         [Display(Name = "评议书")]
         public virtual Document CommentBook { get; set; }
 
         public virtual UserProfile Teacher { get; set; }
+        [Display(Name="平时成绩")]
+        public int UsualScore { get; set; }
+        [Display(Name = "审阅成绩")]
+        public int ReviewScore { get; set; }
+
+        [Display(Name="评阅老师")]
+        public virtual UserProfile CommentTeacher { get; set; }
+        [Display(Name = "答辩评分老师")]
+        public virtual UserProfile AnswerTeacher { get; set; }
+        [Display(Name = "评阅成绩")]
+        public int CommentScore { get; set; }
+        [Display(Name = "答辩成绩")]
+        public int AnswerScore { get; set; }
 
         //时间戳，处理并发问题
         [Timestamp]

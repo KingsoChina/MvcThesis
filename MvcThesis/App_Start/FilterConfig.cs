@@ -38,12 +38,5 @@ namespace MvcThesis
             }
         }
     }
-    //public class MyGlobalAttribute : ActionFilterAttribute
-    //{
-    //    public override void OnActionExecuted(ActionExecutedContext filterContext)
-    //    {
-    //        base.OnActionExecuted(filterContext);
-    //        var request = filterContext.HttpContext.Request;
-    //    }
-    //}
+
 }

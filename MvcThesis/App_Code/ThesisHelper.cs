@@ -102,6 +102,12 @@ namespace MvcThesis
             }
                 
         }
+
+        public static IList<Major> getMajor()
+        {
+            MvcThesisMembershipContext db = new MvcThesisMembershipContext();
+            return db.Majors.ToList();
+        }
         /// <summary>
         /// 覆盖word文件
         /// </summary>

@@ -1,0 +1,35 @@
+﻿@*分配评分老师*@
+@using (Html.BeginForm("AssignMarker", "Topic", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+{
+    <div style="margin:0;padding:0;display:inline">
+        @Html.AntiForgeryToken()
+    </div>
+
+    <div class="control-group">
+        @Html.Label("评阅评分老师", new { @class = "control-label" })
+        <div class="controls">
+            <select class="select2 span5 select2-offscreen" name="CommentTeacherId">
+                @foreach (var tec in ViewData["Tec"] as IEnumerable<MvcThesis.UserProfile>)
+                {
+                    <option value="@tec.UserId" @if (ViewData["topic"] != null && (ViewData["topic"] as MvcThesis.Topic).CommentTeacher == tec) { @Html.Raw("selected='selected'")       }>
+                        @tec.FullName
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.Label("答辩评分老师", new { @class = "control-label" })
+        <div class="controls">
+            <select class="select2 span5 select2-offscreen" name="AnswerTeacherId">
+                @foreach (var tec in ViewData["Tec"] as IEnumerable<MvcThesis.UserProfile>)
+                {
+                    <option value="@tec.UserId" @if (ViewData["topic"] != null && (ViewData["topic"] as MvcThesis.Topic).AnswerTeacher == tec) { @Html.Raw("selected='selected'")  }>
+                        @tec.FullName
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+    @Html.Hidden("id",ViewData["id"])
+}

@@ -25,7 +25,7 @@ namespace MvcThesis
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Document> Documents { get; set; }
-        //public DbSet<TopicAttribute> TopicAttribute { get; set; }
+        public DbSet<Major> Majors { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MvcThesisMembership>()
@@ -37,9 +37,6 @@ namespace MvcThesis
                   m.MapLeftKey("UserId");
                   m.MapRightKey("RoleId");
               });
-            //modelBuilder.Entity<UserProfile>()
-            //    .HasMany<Topic>(t => t.Topics)
-            //    .WithOptional(u => u.Teacher);
         }
     }
 }

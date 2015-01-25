@@ -16,12 +16,11 @@
     <div class="control-group">
         @Html.LabelFor(m => m.ApplyClass, new { @class = "control-label" })
         <div class="controls">
-            <select id="ApplyClass" name="ApplyClass">
-                <option value="信息与计算科学" @if (Model.ApplyClass == "信息与计算科学") { @Html.Raw("selected = 'selected'")   }>信息与计算科学</option>
-                <option value="数学与应用数学" @if (Model.ApplyClass == "数学与应用数学") { @Html.Raw("selected = 'selected'")    }>数学与应用数学</option>
-                <option value="统计学" @if (Model.ApplyClass == "统计学") { @Html.Raw("selected = 'selected'")    }>统计学</option>
-                <option value="全部适用" @if (Model.ApplyClass == "全部适用")
-                { @Html.Raw("selected = 'selected'")    }>全部适用</option>
+            <select id="ApplyClass" multiple="" placeholder="请选择至少一个专业" name="ApplyClass" class="select2 input-block-level">
+                @foreach (var Major in ViewData["MajorList"] as IList<MvcThesis.Major>)
+                {
+                    <option value="@Major.Name" @if((ViewData["SelectedMajor"] as string[]).Contains(Major.Name)){@Html.Raw("selected = 'selected'")}>@Major.Name</option>
+                }
             </select>
         </div>
     </div>

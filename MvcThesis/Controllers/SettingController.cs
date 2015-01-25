@@ -29,8 +29,8 @@ namespace MvcThesis.Controllers
             string ReportEndTime = db.Settings.Single(m => m.Title == "开题报告结束时间").Content;
             string ThesisStartTime = db.Settings.Single(m => m.Title == "毕业论文开始时间").Content;
             string ThesisEndTime = db.Settings.Single(m => m.Title == "毕业论文结束时间").Content;
-            string CommentBookStartTime = db.Settings.Single(m => m.Title == "任务书开始时间").Content;
-            string CommentBookEndTime = db.Settings.Single(m => m.Title == "任务书结束时间").Content;
+            string CommentBookStartTime = db.Settings.Single(m => m.Title == "评议书开始时间").Content;
+            string CommentBookEndTime = db.Settings.Single(m => m.Title == "评议书结束时间").Content;
             ViewData["Notice"] = Notice;
             ViewData["TopicStartTime"] = TopicStartTime;
             ViewData["TopicEndTime"] = TopicEndTime;

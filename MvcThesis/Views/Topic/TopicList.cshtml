@@ -4,6 +4,11 @@
     <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
         <div class='box-header purple-background'>
             <div class='title'>课题列表</div>
+
+            <div class="pull-left">
+                <a class="btn-info btn"><input type="checkbox" id="checkAll" /><label for="checkAll" style="display:inline;">全选</label></a>
+                <button class="btn-success btn btn-modal" id="SubCheckBtn" data-title="分配评分老师" data-content="通过选中的课题吗？" data-url="@Url.Action("AssignMarker")" data-id="">分配评分老师</button>
+            </div>
             <div class="pull-right">
                 @if (Roles.IsUserInRole("院长") || Roles.IsUserInRole("系统管理员"))
                 {
@@ -31,9 +36,9 @@
                                     教师
                                 </th>
                                 <th>
-                                    情况
+                                    状态
                                 </th>
-                                <th></th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +46,7 @@
                             {
                                 <tr>
                                     <td>
+                                        <input type="checkbox" name="topicId" value="@topic.TopicId" />
                                         <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看课题详情" data-url="@Url.Action("TopicDetail","Tec")" data-id="@topic.TopicId">
                                             @topic.Title
                                             @if (topic.IsFromStudent)
@@ -61,13 +67,25 @@
                                         @if (topic.Teacher != null)
                                         {
                                             <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.Teacher.UserId">
-                                                @topic.Teacher.FullName
+                                                 @(topic.Teacher.FullName)（指导）
                                             </div>
                                         }
                                         else
                                         {
                                             <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.Comments.First(m=>m.Teacher!=null).Teacher.UserId">
                                                 @topic.Comments.First(m => m.Teacher != null).Teacher.FullName
+                                            </div>
+                                        }
+                                        @if (topic.CommentTeacher != null)
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.CommentTeacher.UserId">
+                                                 @(topic.CommentTeacher.FullName)（评阅）
+                                            </div>
+                                        }
+                                        @if (topic.AnswerTeacher != null)
+                                        {
+                                            <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail")" data-id="@topic.AnswerTeacher.UserId">
+                                                @(topic.AnswerTeacher.FullName)（答辩）
                                             </div>
                                         }
 
@@ -112,3 +130,32 @@
 </div>
 <div class="modal hide fade in" id="modal-profile" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
 </div>
+@section scripts{
+    <script type="text/javascript">
+        var CheckedIds = [];
+        $("#checkAll").live("click", function () {
+            if ($(this).attr("checked") == "checked") {
+                $("tbody input:checkbox").each(function (i, e) {
+                    $(this).attr("checked", true);
+                    CheckedIds.push($(this).val());
+                });
+            } else {
+                $("tbody input:checkbox").each(function (i, e) {
+                    $(this).attr("checked", false);
+                    $.inArray($(this).val(), CheckedIds) + 1 && CheckedIds.splice($.inArray($(this).val(), CheckedIds), 1);
+                });
+            }
+            $("#SubCheckBtn").attr("data-id", CheckedIds.join(","));
+        });
+        $("tbody input:checkbox").live("click", function () {
+            if ($(this).attr("checked") == "checked") {
+                CheckedIds.push($(this).val());
+            } else {
+                $.inArray($(this).val(), CheckedIds) + 1 && CheckedIds.splice($.inArray($(this).val(), CheckedIds), 1);
+            }
+        });
+        $("input:checkbox").live("click", function () {
+            $("#SubCheckBtn").attr("data-id", CheckedIds.join(","));
+        });
+    </script>
+}

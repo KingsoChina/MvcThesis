@@ -78,7 +78,7 @@
                                 <h3>编辑资料</h3>
                             </div>
                             <div class="modal-body">
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button class="btn" data-dismiss="modal">关闭</button>
@@ -184,6 +184,11 @@
                     load_html = "<div style=\"width:100%;text-align:center;\"><img alt=\"加载中\" src=\"@Url.Content("~/Content/assets/images/ajax-loaders/11.gif")\" style=\"margin:auto;\"></div>";
                 $modal.children(".modal-body").html(load_html);
                 $.get(url, { id: id }, function (data) {
+                    if (data.status == 0)
+                    {
+                        data.msg && $.jGrowl(data.msg);
+                        return;
+                    }
                     $modal.children(".modal-header").children("h3").html(title);//标题
                     $modal.children(".modal-body").html(data);//表单内容
                     $.validator.unobtrusive.parse(".modal-body form");//重新绑定验证
@@ -196,8 +201,10 @@
                         $(".modal-footer .btn").first().html("\u53d6\u6d88");
                         $(".modal-footer .btn").last().html("\u63d0\u4ea4");
                     }
+                    $modal.modal();
+
                 });
-                $modal.modal();
+
             });
             $(".modal-body form").ajaxForm({
                 delegation: true,
