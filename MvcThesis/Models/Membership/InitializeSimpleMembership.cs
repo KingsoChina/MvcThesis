@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
@@ -20,6 +22,23 @@ namespace MvcThesis
         {
             // Ensure ASP.NET Simple Membership is initialized only once per app start
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
+            
+        }
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (WebSecurity.IsAuthenticated && filterContext.RouteData.Values["action"].ToString() != "LogOff")
+            {
+                MvcThesisMembershipContext db = new MvcThesisMembershipContext();
+                int uid = WebSecurity.CurrentUserId;
+                int CNum = db.Topics.Where(m => m.CommentTeacher.UserId == uid).Count();
+                int ANum = db.Topics.Where(m => m.AnswerTeacher.UserId == uid).Count();
+                var ViewResult = filterContext.Result as ViewResult;
+                if (ViewResult != null) {
+                    if (CNum > 0) ViewResult.ViewBag.ToComment = 1;
+                    if (ANum > 0) ViewResult.ViewBag.ToAnswer = 1;
+                }
+            }
+           
         }
 
         private class SimpleMembershipInitializer
@@ -38,9 +57,10 @@ namespace MvcThesis
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-                    if(!WebSecurity.Initialized)
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
-                    if (!WebSecurity.UserExists("sxadmin")) {
+                    if (!WebSecurity.Initialized)
+                        WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    if (!WebSecurity.UserExists("sxadmin"))
+                    {
                         WebSecurity.CreateUserAndAccount("sxadmin", "111111", new { MaxGuideNum = 0 });
                         Roles.AddUserToRole("sxadmin", "系统管理员");
                     }
@@ -49,6 +69,7 @@ namespace MvcThesis
                 {
                     throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
                 }
+
             }
         }
     }
@@ -67,7 +88,7 @@ namespace MvcThesis
             if (HttpContext.Current.User.Identity.Name != "")
             {
                 _authorize = true;
-                
+
             }
             else
             {
@@ -112,7 +133,7 @@ namespace MvcThesis
                 }
                 return true;
             }
-           // return false;
+            // return false;
         }
         //protected override bool AuthorizeCore(HttpContextBase httpContext)
         //{
@@ -133,7 +154,7 @@ namespace MvcThesis
             {
                 base.HandleUnauthorizedRequest(filterContext);
             }
-            
+
         }
     }
 }

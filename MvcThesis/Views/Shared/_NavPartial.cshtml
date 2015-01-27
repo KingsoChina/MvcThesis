@@ -28,6 +28,24 @@
                 <span>我的课题列表</span>
             </a>
         </li>
+        if (ViewBag.ToComment == 1)
+        {
+            <li class='active'>
+                <a href='@Url.Action("CommentTopicList","Tec")'>
+                    <i class='icon-list'></i>
+                    <span>待评阅课题列表</span>
+                </a>
+            </li>
+        }
+        if (ViewBag.ToAnswer == 1)
+        {
+            <li class='active'>
+                <a href='@Url.Action("AnswerTopicList","Tec")'>
+                    <i class='icon-list'></i>
+                    <span>待答辩评分课题列表</span>
+                </a>
+            </li>
+        }
     }
     @if (User.IsInRole("院长") || User.IsInRole("系统管理员"))
     {

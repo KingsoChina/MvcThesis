@@ -1,0 +1,21 @@
+﻿@*答辩评分*@
+@model MvcThesis.Topic
+
+
+@using (Html.BeginForm("ScoreAnswer", "Tec", FormMethod.Post, new { @class = "form form-horizontal", @style = "margin-bottom: 0;" }))
+{
+    <div style="margin:0;padding:0;display:inline">
+        @Html.AntiForgeryToken()
+    </div>
+    <div class="text-center control-group">
+        <h2>请为 @Model.Student.FullName 评分</h2>
+        <small class="muted">课题名称：@Model.Title</small>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.AnswerScore, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBox("AnswerScore", Model.AnswerScore > 0 ? Model.AnswerScore.ToString() : "", new { @placeholder = "100分制" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.TopicId)
+}

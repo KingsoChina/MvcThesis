@@ -271,19 +271,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelper\CheckBoxListHelper.cs" />
-    <Compile Include="Migrations\201501231104010_InitCreate.cs" />
-    <Compile Include="Migrations\201501231104010_InitCreate.Designer.cs">
-      <DependentUpon>201501231104010_InitCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201501231121002_Update.cs" />
-    <Compile Include="Migrations\201501231121002_Update.Designer.cs">
-      <DependentUpon>201501231121002_Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201501250406040_AddMajor.cs" />
-    <Compile Include="Migrations\201501250406040_AddMajor.Designer.cs">
-      <DependentUpon>201501250406040_AddMajor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Major.cs" />
     <Compile Include="Models\Membership\InitializeSimpleMembership.cs" />
@@ -631,6 +618,10 @@
     <Content Include="Views\Error\Browser.cshtml" />
     <Content Include="Views\Tec\ScoreGuide.cshtml" />
     <Content Include="Views\Topic\AssignMarker.cshtml" />
+    <Content Include="Views\Tec\CommentTopicList.cshtml" />
+    <Content Include="Views\Tec\AnswerTopicList.cshtml" />
+    <Content Include="Views\Tec\ScoreAnswer.cshtml" />
+    <Content Include="Views\Tec\ScoreComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Upload\Import\" />
@@ -643,17 +634,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501231104010_InitCreate.resx">
-      <DependentUpon>201501231104010_InitCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501231121002_Update.resx">
-      <DependentUpon>201501231121002_Update.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501250406040_AddMajor.resx">
-      <DependentUpon>201501250406040_AddMajor.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

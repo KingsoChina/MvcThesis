@@ -221,6 +221,42 @@ namespace MvcThesis.Controllers
             return Json(new { status = 1, msg = "导出成功" });
         }
 
+        public ActionResult ExcelToScore()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[]{
+                new DataColumn("学号"),
+                new DataColumn("班级"),
+                new DataColumn("姓名"),
+                new DataColumn("平时成绩"),
+                new DataColumn("审阅成绩"),
+                new DataColumn("评阅成绩"),
+                new DataColumn("答辩成绩"),
+                new DataColumn("总分"),
+            });
+            List<Topic> TopicList = db.Topics.ToList();
+            foreach (var topic in TopicList)
+            {
+                int FullSource =  Convert.ToInt32(topic.UsualScore * 0.2 + topic.ReviewScore * 0.3 + topic.CommentScore * .02 + topic.AnswerScore * 0.3);
+                UserProfile Student = topic.Student;
+                if (Student == null) continue;
+                object[] obj = new object[]{
+                    Student.UserName,
+                    Student.Class,
+                    Student.FullName,
+                    topic.UsualScore,
+                    topic.ReviewScore,
+                    topic.CommentScore,
+                    topic.AnswerScore,
+                    FullSource
+                };
+                dt.Rows.Add(obj);
+            }
+            int[] ColumnWidth = new int[] { 15, 20, 10, 10, 15, 15, 15, 15, 15 };//设定列宽
+            NpoiHelper.ExportDataTableToExcel(dt, DateTime.Now.Year + "毕业论文评分汇总.xls", "毕业论文评分汇总", ColumnWidth);
+            return Json(new { status = 1, msg = "导出成功" });
+        }
+
         //压缩文档文件夹
         public ActionResult ZipToDocument()
         {

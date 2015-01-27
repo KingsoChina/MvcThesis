@@ -30,7 +30,7 @@ namespace MvcThesis.Controllers
             {
                 return RedirectToAction("MyThesis");
             }
-            IEnumerable TopicList = db.Topics.Where(m => m.Student == null && m.IsDeanAgree == 1 && m.Status == 0).ToList().Where(( m=>m.ApplyClass.Split(',').Contains(Stu.Major)));
+            IEnumerable TopicList = db.Topics.Where(m => m.Student == null && m.IsDeanAgree == 1 && m.Status == 0).ToList().Where( m=>m.ApplyClass.Split(',').Contains(Stu.Major) || m.ApplyClass == "全部适用");
             return View(TopicList);
         }
         [MultipleResponseFormats]
@@ -59,7 +59,7 @@ namespace MvcThesis.Controllers
             db.SaveChanges();
             return Json(new { status = 1, msg = "自命题成功，等待老师同意" });
         }
-        [Authorize(Roles="系统管理员,院长,院长助理,学生")]
+        [Authorize(Roles="系统管理员,院长,院长助理,教师,学生")]
         //查看教师资料
         [MultipleResponseFormats]
         public ActionResult TecDetail(int id)

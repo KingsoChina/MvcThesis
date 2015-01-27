@@ -36,11 +36,48 @@ namespace MvcThesis.Controllers
             if (UScore < 0 || UScore > 100)
                 return Json(new { status = 0, msg = "平时成绩分值格式不正确" });
             if (RScore < 0 || RScore > 100)
-                return Json(new { status = 0, msg = "评阅成绩分值格式不正确" });
+                return Json(new { status = 0, msg = "审阅成绩分值格式不正确" });
             Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == TopicId);
             if (topic == null) return Json(new { status = 0, msg = "出错" });
             topic.UsualScore = UScore;
             topic.ReviewScore = RScore;
+            db.SaveChanges();
+            return Json(new { status = 1, msg = "评分成功" });
+        }
+
+        [HttpGet]
+        public ActionResult ScoreComment(int id)
+        {
+            Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == id);
+            return View(topic);
+        }
+        [HttpPost]
+        public ActionResult ScoreComment(string CommentScore, int TopicId)
+        {
+            int UScore = Convert.ToInt32(CommentScore);
+            if (UScore < 0 || UScore > 100)
+                return Json(new { status = 0, msg = "评阅成绩分值格式不正确" });
+            Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == TopicId);
+            if (topic == null) return Json(new { status = 0, msg = "出错" });
+            topic.CommentScore = UScore;
+            db.SaveChanges();
+            return Json(new { status = 1, msg = "评分成功" });
+        }
+        [HttpGet]
+        public ActionResult ScoreAnswer(int id)
+        {
+            Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == id);
+            return View(topic);
+        }
+        [HttpPost]
+        public ActionResult ScoreAnswer(string AnswerScore, int TopicId)
+        {
+            int UScore = Convert.ToInt32(AnswerScore);
+            if (UScore < 0 || UScore > 100)
+                return Json(new { status = 0, msg = "答辩成绩分值格式不正确" });
+            Topic topic = db.Topics.SingleOrDefault(m => m.TopicId == TopicId);
+            if (topic == null) return Json(new { status = 0, msg = "出错" });
+            topic.AnswerScore = UScore;
             db.SaveChanges();
             return Json(new { status = 1, msg = "评分成功" });
         }
@@ -177,7 +214,28 @@ namespace MvcThesis.Controllers
             db.SaveChanges();
             return Json(new { status = 1, msg = "更改成功" });
         }
+        [MultipleResponseFormats]
+        public ActionResult CommentTopicList()
+        {
+            UserProfile Teacher = db.UserProfiles.SingleOrDefault(m => m.UserId == WebSecurity.CurrentUserId);
+            IList<Topic> TopicList = db.Topics.Where(m => m.CommentTeacher.UserId == Teacher.UserId).ToList();
+            if (TopicList.Count() > 0) {
+                return View(TopicList);
+            }
+            return HttpNotFound();
+        }
 
+        [MultipleResponseFormats]
+        public ActionResult AnswerTopicList()
+        {
+            UserProfile Teacher = db.UserProfiles.SingleOrDefault(m => m.UserId == WebSecurity.CurrentUserId);
+            IList<Topic> TopicList = db.Topics.Where(m => m.AnswerTeacher.UserId == Teacher.UserId).ToList();
+            if (TopicList.Count() > 0)
+            {
+                return View(TopicList);
+            }
+            return HttpNotFound();
+        }
 
         //删除指定论题
         [HttpPost]

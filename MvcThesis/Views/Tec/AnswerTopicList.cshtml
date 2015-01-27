@@ -1,18 +1,12 @@
-﻿@*教师课题列表*@
-@model IEnumerable<MvcThesis.Topic>
+﻿@*答辩评分课题列表*@
 @{
-    ViewBag.Title = "课题列表";
+    ViewBag.Title = "答辩评分课题列表";
 }
+@model IEnumerable<MvcThesis.Topic>
 <div class='row-fluid'>
     <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
         <div class='box-header purple-background'>
-            <div class='title'>指导课题列表</div>
-            <div class="pull-right">
-                @if (ViewBag.MaxNum != 1)
-                {
-                    <button class="btn btn-success btn-modal" data-url="@Url.Action("SetTopic")" data-title="发布课题" name="button" style="margin-bottom:5px" type="submit">添加</button>
-                }
-            </div>
+            <div class='title'>答辩评分课题列表</div>
         </div>
         <div class='box-content box-no-padding'>
             <div class='responsive-table'>
@@ -22,6 +16,9 @@
                             <tr>
                                 <th>
                                     课题名称
+                                </th>
+                                <th>
+                                    指导老师
                                 </th>
                                 <th>
                                     指导学生
@@ -48,6 +45,11 @@
                                         </div>
                                     </td>
                                     <td>
+                                        <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看教师详情" data-url="@Url.Action("TecDetail", "Stu")" data-id="@topic.Teacher.UserId">
+                                            @(topic.Teacher.FullName)
+                                        </div>
+                                    </td>
+                                    <td>
                                         @if (topic.Student != null)
                                         {
                                             <div class="btn btn-link has-tooltip show-modal" data-placement="top" title="点击查看学生详情" data-url="@Url.Action("StuDetail")" data-id="@topic.Student.UserId">
@@ -60,51 +62,16 @@
                                         }
                                     </td>
                                     <td>
-                                        @if (topic.IsDeanAgree == 1)
+                                        @if (topic.AnswerScore > 0)
                                         {
-                                            <span class="label label-success">通过</span>
-                                        }
-                                        else if (topic.IsDeanAgree == 0 && topic.IsTeacherAgree == 1)
-                                        {
-                                            <span class="label label-inverse">等待上级确认</span>
-                                        }
-                                        else if (topic.Student != null && topic.IsTeacherAgree == 0)
-                                        {
-                                            <span class="label label-important">等待您确认指导</span>
-                                        }
-                                        else if (topic.Student == null && topic.IsTeacherAgree == 0)
-                                        {
-                                            <span class="label label-important">等待您确认申报</span>
+                                            <span class="label label-success">@topic.AnswerScore 分</span>
                                         }
                                         else
                                         {
-                                            <span class="label">未有情况</span>
+                                            <span class="label label-inverse">等待您评分</span>
                                         }
                                     </td>
                                     <td>
-                                        @if (topic.Student != null && topic.IsTeacherAgree == 0)
-                                        {
-                                            <div class='text-right'>
-                                                <a class="btn btn-success btn-confirm" data-content="确认同意指导此学生？" data-url="@Url.Action("ConfirmChosen")" data-id="@topic.TopicId">
-                                                    同意指导
-                                                </a>
-                                                <a class="btn btn-warning btn-modal" data-url="@Url.Action("DenyChosen")" data-id="@topic.TopicId">
-                                                    驳回
-                                                </a>
-                                            </div>
-                                        }
-                                        @if (topic.Student == null && topic.IsTeacherAgree == 0)
-                                        {
-                                            <a class="btn btn-success btn-confirm" data-content="确认要申报此课题么？一经申报不可以再更改和删除课题信息！" data-url="@Url.Action("ConfirmTopic")" data-id="@topic.TopicId">
-                                                申报
-                                            </a>
-                                            <a class="btn btn-warning btn-modal" data-title="修改课题" data-url="@Url.Action("EditTopic")" data-id="@topic.TopicId">
-                                                更改
-                                            </a>
-                                            <a class="btn btn-danger btn-confirm" data-content="确认要删除此课题么？" data-url="@Url.Action("Delete")" data-id="@topic.TopicId">
-                                                删除
-                                            </a>
-                                        }
                                         @if (!(topic.CommentBook == null && topic.Report == null && topic.Thesis == null && topic.CommentBook == null))
                                         {
                                             <a class="btn btn-warning show-modal" data-url="@Url.Action("DocumentDetail","Tec")" data-id="@topic.TopicId">
@@ -113,8 +80,8 @@
                                         }
                                         @if (topic.CommentBook != null)
                                         {
-                                            <a class="btn btn-info btn-modal" data-url="@Url.Action("ScoreGuide", "Tec")" data-title="审阅评分" data-id="@topic.TopicId">
-                                                审阅评分
+                                            <a class="btn btn-info btn-modal" data-url="@Url.Action("ScoreAnswer", "Tec")" data-title="答辩评分" data-id="@topic.TopicId">
+                                                答辩评分
                                             </a>
                                         }
                                     </td>

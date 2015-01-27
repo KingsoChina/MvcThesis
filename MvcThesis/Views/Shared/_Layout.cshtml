@@ -202,6 +202,9 @@
                         $(".modal-footer .btn").last().html("\u63d0\u4ea4");
                     }
                     $modal.modal();
+                    $modal.on('hide.bs.modal', function (event, modal) {
+                        $("#modal form select").select2("close");
+                    });
 
                 });
 
