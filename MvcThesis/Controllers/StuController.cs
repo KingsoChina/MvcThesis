@@ -101,16 +101,24 @@ namespace MvcThesis.Controllers
         public ActionResult MyThesis()
         {
             DateTime MissionBookStartTime = Convert.ToDateTime(ThesisHelper.C("任务书开始时间"));
+            ViewBag.MissionBookStartTime = MissionBookStartTime;
             DateTime MissionBookEndTime = Convert.ToDateTime(ThesisHelper.C("任务书结束时间"));
+            ViewBag.MissionBookEndTime = MissionBookEndTime;
             ViewBag.MissionBookStatus = DateTime.Now < MissionBookStartTime ? -1 : DateTime.Now > MissionBookEndTime ? 1 : 0;
             DateTime ReportStartTime = Convert.ToDateTime(ThesisHelper.C("开题报告开始时间"));
+            ViewBag.ReportStartTime = ReportStartTime;
             DateTime ReportEndTime = Convert.ToDateTime(ThesisHelper.C("开题报告结束时间"));
+            ViewBag.ReportEndTime = ReportEndTime;
             ViewBag.ReportStatus = DateTime.Now < ReportStartTime ? -1 : DateTime.Now > ReportEndTime ? 1 : 0;
             DateTime ThesisStartTime = Convert.ToDateTime(ThesisHelper.C("毕业论文开始时间"));
+            ViewBag.ThesisStartTime = ThesisStartTime;
             DateTime ThesisEndTime = Convert.ToDateTime(ThesisHelper.C("毕业论文结束时间"));
+            ViewBag.ThesisEndTime = ThesisEndTime;
             ViewBag.ThesisStatus = DateTime.Now < ThesisStartTime ? -1 : DateTime.Now > ThesisEndTime ? 1 : 0;
             DateTime CommentBookStartTime = Convert.ToDateTime(ThesisHelper.C("评议书开始时间"));
+            ViewBag.CommentBookStartTime = CommentBookStartTime;
             DateTime CommentBookEndTime = Convert.ToDateTime(ThesisHelper.C("评议书结束时间"));
+            ViewBag.CommentBookEndTime = CommentBookEndTime;
             ViewBag.CommentBookStatus = DateTime.Now < CommentBookStartTime ? -1 : DateTime.Now > CommentBookEndTime ? 1 : 0;
             UserProfile Student = db.UserProfiles.Single(m => m.UserId == WebSecurity.CurrentUserId);
             return View(Student);

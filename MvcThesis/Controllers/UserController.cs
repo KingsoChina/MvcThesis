@@ -251,7 +251,7 @@ namespace MvcThesis.UI.AdminTools.Controllers
             string Phone = collection.Get("Phone");
             string ShortPhone = collection.Get("ShortPhone");
             string JobTitle = collection.Get("JobTitle");
-            int MaxGuideNum = int.Parse(collection.Get("MaxGuideNum"));
+            int MaxGuideNum = collection.Get("MaxGuideNum") == null ? 0 : int.Parse(collection.Get("MaxGuideNum"));
             string Institute = collection.Get("Institute");
             UserProfile user = db.UserProfiles.Single(e => e.UserId == id);
             if (roles != null)
