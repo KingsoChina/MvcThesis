@@ -11,6 +11,7 @@ namespace MvcThesis.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
+    [PasswordSafe]
     public class HomeController : Controller
     {
         private MvcThesisMembershipContext db = new MvcThesisMembershipContext();
@@ -46,6 +47,7 @@ namespace MvcThesis.Controllers
         {
             if (WebSecurity.IsAuthenticated) return RedirectToAction("Index");
             ViewBag.ReturnUrl = returnUrl;
+            ViewData["img_url"] = ThesisHelper.C("登陆界面");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace MvcThesis.Controllers
             {
                 return RedirectToAction("Index");
             }
-
+            ViewData["img_url"] = ThesisHelper.C("登陆界面");
             ViewBag.error = "用户名或密码错误";
             return View(model);
         }
@@ -75,6 +77,7 @@ namespace MvcThesis.Controllers
            int UserId = WebSecurity.GetUserId(User.Identity.Name);
            UserProfile user = db.UserProfiles.Single(m => m.UserId == UserId);
            if (Roles.IsUserInRole("教师")) return View("Profile-Tec", user);
+           if (Request.QueryString["change"] == "1") ViewBag.password = 1;
             return View("Profile",user);
         }
 

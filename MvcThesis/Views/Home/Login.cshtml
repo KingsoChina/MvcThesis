@@ -1,20 +1,25 @@
 ﻿@model MvcThesis.LoginModel
+
 @{
     ViewBag.Title = "登录";
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>@Html.ViewBag.Title</title>
+    <title>@ViewBag.Title</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <!--[if lt IE 9]>
     <script src='/Content/assets/javascripts/html5shiv.js' type='text/javascript'></script>
     <![endif]-->
     <link rel="stylesheet" href="~/Content/login.css" type="text/css" />
+    <style>
+        body {
+            background: url(@Url.Content(ViewData["img_url"].ToString())) no-repeat top center;
+        }
+    </style>
 </head>
 <body>
     <div class="login">

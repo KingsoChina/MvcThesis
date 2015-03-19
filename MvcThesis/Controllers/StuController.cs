@@ -12,6 +12,7 @@ namespace MvcThesis.Controllers
 {
     [Authorize(Roles="学生")]
     [InitializeSimpleMembership]
+    [PasswordSafe]
     public class StuController : Controller
     {
         private MvcThesisMembershipContext db = new MvcThesisMembershipContext();

@@ -1,0 +1,67 @@
+﻿@{ViewBag.Title = "登陆界面";}
+<div class="alert alert-info">
+    <a class="close" data-dismiss="alert" href="#">×</a>
+    <strong>设置登陆界面！</strong>
+    <strong>只需要上传新的图片就可以改变登陆界面了</strong>
+</div>
+<div class="row-fluid">
+    <div class="span12 box">
+        <div class="box-header">
+            <div class="title">
+                <i class="icon-file"></i>
+                修改界面图片
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="picture" id="preview">
+                <img src="@if (ViewData["Img_url"] == null) { Url.Content("~/Content/images/bg.jpg"); } else { @Url.Content(ViewData["Img_url"].ToString()); }">
+            </div>
+        </div>
+        <hr />
+        <button class="btn btn-warning" name="update-btn" id="update-btn" style="margin-bottom:5px" type="submit">更改</button>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#update-btn") && $("#update-btn").uploadifive({
+                'buttonText': "点击修改",
+                'auto': true,
+                "buttonClass": "btn btn-warning",
+                'uploadScript': '@Url.Action("LoginImgHandler")',
+                "onError": function (errorType) {
+                    var msg = "";
+                    switch (errorType) {
+                        case "FORBIDDEN_FILE_TYPE":
+                            msg = "只允许上传图片";
+                            break;
+                        case "404_FILE_NOT_FOUND":
+                            msg = "服务器出错";
+                            break;
+                        case "FILE_SIZE_LIMIT_EXCEEDED":
+                            msg = "文件太大";
+                            break;
+                    }
+                    $.jGrowl('上传失败：' + msg);
+                    $(this).uploadifive("clearQueue");
+                },
+                'onAddQueueItem': function (file) {
+                    $.jGrowl('文件 ' + file.name + ' 添加到上传队列中');
+                },
+                'onUploadFile': function (file) {
+                    $.jGrowl('文件 ' + file.name + ' 上传中。。。');
+                },
+                "onUploadComplete": function (file, data) {
+                    data = JSON.parse(data);
+                    $("#preview>img").attr("src", data.url+"?r="+Math.random());
+                    $.jGrowl('更新成功');
+                    $(this).uploadifive("clearQueue");
+                },
+                "onFallback": function () {
+                    alert("本浏览器不支持文件上传，请更换浏览器，推荐使用谷歌浏览器")
+                },
+            });
+        });
+
+    </script>
+}

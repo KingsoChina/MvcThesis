@@ -43,7 +43,8 @@
             if (el.data("popover") === undefined) {
                 el.popover({
                     placement: el.data("placement") || "top",
-                    container: "body"
+                    container: "body",
+                    html: true
                 });
             }
             return el.popover("show");

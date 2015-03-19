@@ -12,6 +12,7 @@ using WebMatrix.WebData;
 namespace MvcThesis.Controllers
 {
     [InitializeSimpleMembership]
+    [Authorize]
     public class SettingController : Controller
     {
         private MvcThesisMembershipContext db = new MvcThesisMembershipContext();
@@ -115,6 +116,21 @@ namespace MvcThesis.Controllers
             if (!dir.Exists)
                 dir.Create();
             return Json(new { status = 1, msg = "数据库已经回到初始状态" });
+        }
+        [HttpGet]
+        public ActionResult LoginImg()
+        {
+            ViewData["Img_url"] = ThesisHelper.C("登陆界面").ToString();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LoginImgHandler()
+        {
+            HttpPostedFileBase f = Request.Files[0];
+            string relative_url = ThesisHelper.UpLoadImg(f, "background", "bg");
+            ThesisHelper.C("登陆界面", relative_url);
+            string url = Url.Content(relative_url);
+            return Json(new { status = 1, url = url });
         }
 
     }

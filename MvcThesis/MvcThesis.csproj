@@ -271,6 +271,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelper\CheckBoxListHelper.cs" />
+    <Compile Include="Migrations\201503121014077_InitialCreate.cs" />
+    <Compile Include="Migrations\201503121014077_InitialCreate.Designer.cs">
+      <DependentUpon>201503121014077_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Major.cs" />
     <Compile Include="Models\Membership\InitializeSimpleMembership.cs" />
@@ -622,6 +627,7 @@
     <Content Include="Views\Tec\AnswerTopicList.cshtml" />
     <Content Include="Views\Tec\ScoreAnswer.cshtml" />
     <Content Include="Views\Tec\ScoreComment.cshtml" />
+    <Content Include="Views\Setting\LoginImg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Upload\Import\" />
@@ -634,6 +640,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503121014077_InitialCreate.resx">
+      <DependentUpon>201503121014077_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

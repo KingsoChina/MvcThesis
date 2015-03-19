@@ -61,6 +61,12 @@
                 <span>审核课题</span>
             </a>
         </li>
+    <li class='active'>
+        <a href="@Url.Action("LoginImg","Setting")">
+            <i class="icon-picture"></i>
+            <span>登陆界面图片</span>
+        </a>
+    </li>
     }
     @if (User.IsInRole("院长") || User.IsInRole("系统管理员") || User.IsInRole("院长助理"))
     {

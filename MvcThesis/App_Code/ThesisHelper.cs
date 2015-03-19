@@ -95,9 +95,17 @@ namespace MvcThesis
         {
             MvcThesisMembershipContext db = new MvcThesisMembershipContext();
             if (value == "")
-                return db.Settings.Single(m => m.Title == item).Content;
-            else {
-                db.Settings.Single(m => m.Title == item).Content = value;
+            {
+                Setting set = db.Settings.SingleOrDefault(m => m.Title == item);
+                return set == null ? "" : db.Settings.Single(m => m.Title == item).Content;
+            }
+            else
+            {
+                Setting set = null;
+                set = db.Settings.SingleOrDefault(m => m.Title == item);
+                if (set == null) set = db.Settings.Add(new Setting() { Title = item });
+                set.Content = value;
+                db.SaveChanges();
                 return value;
             }
                 
@@ -227,6 +235,70 @@ namespace MvcThesis
             DirPath = System.Web.HttpContext.Current.Server.MapPath(DirPath);
             zip.CreateZip(filePath, DirPath, true, "");
             return true;
+        }
+
+        /// <summary>
+        /// 上传图片文件
+        /// </summary>
+        /// <param name="inputfile">上传的控件名</param>
+        /// <param name="newfilename">新文件名</param>
+        /// <param name="dirPath">文件夹路径</param>
+        /// <returns></returns>
+        public static string UpLoadImg(HttpPostedFileBase inputfile, string dirPath, string newfilename = "")
+        {
+            string orifilename = string.Empty;
+            string uploadfilepath = string.Empty;
+            string modifyfilename = string.Empty;
+            string fileExtend = "";//文件扩展名
+            string[] acceptExtension = {"png","jpg","jpeg"};
+            int fileSize = 0;//文件大小
+            try
+            {
+                if (inputfile.FileName != string.Empty)
+                {
+                    //得到文件的大小
+                    fileSize = inputfile.ContentLength;
+                    if (fileSize == 0)
+                    {
+                        throw new Exception("导入的文件大小为0，请检查是否正确！");
+                    }
+                    //得到扩展名
+                    fileExtend = inputfile.FileName.Substring(inputfile.FileName.LastIndexOf(".") + 1);
+                    if (!acceptExtension.Contains(fileExtend.ToLower()))
+                    {
+                        throw new Exception("你选择的文件格式不正确");
+                    }
+                    string RelativePath = "~/upload/" + dirPath;
+                    //路径
+                    uploadfilepath = System.Web.HttpContext.Current.Server.MapPath(RelativePath);
+                    //新文件名
+                    modifyfilename = newfilename == "" ? System.Guid.NewGuid().ToString() : newfilename;
+                    modifyfilename += "." + inputfile.FileName.Substring(inputfile.FileName.LastIndexOf(".") + 1);
+                    //判断是否有该目录
+                    System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(uploadfilepath);
+                    if (!dir.Exists)
+                    {
+                        dir.Create();
+                    }
+                    orifilename = uploadfilepath + "\\" + modifyfilename;
+                    //如果存在,删除文件
+                    if (File.Exists(orifilename))
+                    {
+                        File.Delete(orifilename);
+                    }
+                    // 上传文件
+                    inputfile.SaveAs(orifilename);
+                    return RelativePath + "/" + modifyfilename;
+                }
+                else
+                {
+                    throw new Exception("请选择要导入的Word文件!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
            
 

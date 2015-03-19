@@ -25,19 +25,7 @@ namespace MvcThesis.Migrations
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );
-            context.Settings.AddOrUpdate(p => p.Title,
-                new Setting
-                {
-                    Title = "指导老师审阅时间",
-                    Content = DateTime.Now.ToString()
-                },
-                new Setting { Title = "评阅老师评阅时间", Content = DateTime.Now.ToString() }
-                );
-            context.Majors.AddOrUpdate(p => p.Name,
-                new Major { Name = "信息与计算科学" },
-                new Major { Name = "应用数学" },
-                new Major { Name = "统计学"}
-             );
+            //
         }
     }
 }

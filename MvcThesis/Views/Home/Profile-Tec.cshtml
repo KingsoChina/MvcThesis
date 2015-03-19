@@ -60,7 +60,7 @@
                                 @Html.ValidationMessageFor(m => m.ShortPhone)
                             </div>
                         </div><hr class="hr-normal">
-                        <div class="control-group">
+                        <div class="control-group" id="password_area">
                             <div class="controls">
                                 <label class="checkbox">
                                     <input data-target="#change-password" data-toggle="collapse" name="changepasswordcheck" type="checkbox" value="1" class="collapsed">
@@ -68,7 +68,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="collapse" id="change-password" style="height: 0px;">
+                        @if (ViewBag.password == 1)
+                        {
+                            <div class="alert alert-danger">
+                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                请修改原始密码
+                            </div>
+                        }
+                        <div class="collapse @if(ViewBag.password == 1){@Html.Raw("in")}" id="change-password" style="@if(ViewBag.password == 1){@Html.Raw("height: auto;")}else{@Html.Raw("height: 0px;")}">
                             <div class="control-group">
                                 <label class="control-label">原始密码</label>
                                 <div class="controls">
